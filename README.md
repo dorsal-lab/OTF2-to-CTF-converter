@@ -8,8 +8,8 @@ A CTF stream containing global definitions (in the form of CTF events at the OTF
 
 ## Usage
 To use the converter you have to :  
-- set the following environment variable OTF2_CONVERTER : export OTF2_CONVERTER=<path to the project directory>  
-- use the following command : ./otf2_converter --njobs <expected number of threads> --output <output directory> <OTF2 trace to convert>  
+- set the following environment variable OTF2_CONVERTER : ```export OTF2_CONVERTER=<path to the project directory>```  
+- use the following command : ```./otf2_converter --njobs <expected number of threads> --output <output directory> <OTF2 trace to convert>```  
 
 ## Installation
  
