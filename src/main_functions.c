@@ -14,6 +14,7 @@
 #include "global_def_callbacks.h"
 
 #define OTF2_CALL(call) if(call != OTF2_SUCCESS) {printf("OTF2 error : %s\n", OTF2_Error_GetDescription(call)); abort();}
+#define BUFFER_SIZE 1000
 
 //Function that converts a timestamp into nanoseconds given the clock frequency
 uint64_t timestamp_to_ns(uint64_t timestamp, uint64_t clock_frequency){
@@ -21,7 +22,7 @@ uint64_t timestamp_to_ns(uint64_t timestamp, uint64_t clock_frequency){
 }
 
 //Function that copy the metadata file from the converter directory to the given output directory
-void copy_metadata_file(char* output_directory){
+void copy_metadata_file(char* output_directory, uint64_t clock_frequency){
     const char* converter_directory = getenv("OTF2_CONVERTER");
     if(converter_directory == NULL)
     {
@@ -61,8 +62,32 @@ void copy_metadata_file(char* output_directory){
       abort();
    }
 
-   //Copy the file
-   while ((ch = fgetc(source)) != EOF) fputc(ch, target);
+   //Copy the file line by line. Change trace name line and clock frequency line
+    char buffer[BUFFER_SIZE];
+    char newline[BUFFER_SIZE];
+    int count = 0;
+    
+
+    int tracer_line_number = 60;
+    char* tracer_line = "\ttracer_name = \"otf2\";\n";
+
+    int clock_frequency_line_number = 70;
+    char clock_frequency_line[1000] = "";
+
+    sprintf(clock_frequency_line, "\tfreq = %lu;\n", clock_frequency);
+
+    while ((fgets(buffer, BUFFER_SIZE, source)) != NULL)
+    {
+        count++;
+
+        /* If current line is line to replace */
+        if (count == tracer_line_number)
+            fputs(tracer_line, target);
+        if (count == clock_frequency_line_number)
+            fputs(clock_frequency_line, target);
+        if (count != tracer_line_number && count != clock_frequency_line_number)
+            fputs(buffer, target);
+    }
 
    printf("Metadata file copied successfully.\n");
    fclose(source);
@@ -116,6 +141,7 @@ static OTF2_CallbackCode GlobDefClockProperties_Register( void* userData,
     clock_properties->offset = offset;
     clock_properties->trace_length = trace_length;
     clock_properties->filled = 1;
+    clock_properties->first_offset_defined = 1;
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -180,7 +206,8 @@ void delete_threads_locations(thread_locations_t* thread_locations, int nb_threa
 clock_properties_t* get_clock_properties(OTF2_Reader* reader){
     clock_properties_t* clock_properties = (clock_properties_t*)malloc(sizeof(clock_properties_t));
     clock_properties->filled = 0;
-        OTF2_GlobalDefReader* global_def_reader = OTF2_Reader_GetGlobalDefReader(reader);
+    clock_properties->first_offset_defined = 0;
+    OTF2_GlobalDefReader* global_def_reader = OTF2_Reader_GetGlobalDefReader(reader);
     if(global_def_reader == NULL){
         printf("Error : couldn't get GlobalDefReader\n");
         abort();
@@ -207,6 +234,49 @@ void delete_clock_properties(clock_properties_t* clock_properties){
     free(clock_properties);
 }
 
+//Callback that register the timestamp of a program begin event as the first timestamp of the trace if it is 
+//lower than the current offset
+static OTF2_CallbackCode ProgramBeginEvent_Register(OTF2_LocationRef location,
+                            OTF2_TimeStamp time,
+                            uint64_t eventPosition,
+                            void *userData,
+                            OTF2_AttributeList *attributeList,
+                            OTF2_StringRef programName,
+                            uint32_t numberOfArguments,
+                            const OTF2_StringRef *programArguments)
+{
+    clock_properties_t* clock_properties = (clock_properties_t*)userData;
+    if(clock_properties->first_offset_defined == 0){
+        clock_properties->offset == time;
+        clock_properties->first_offset_defined = 1;
+        return OTF2_CALLBACK_SUCCESS;
+    }
+    clock_properties->offset = (time < clock_properties->offset) ? time : clock_properties->offset;
+    return OTF2_CALLBACK_SUCCESS;
+}
+
+//Function that reads every location and search for PROGRAM BEGIN event in order to find the first timestamp for all events
+void get_real_offset(OTF2_Reader* reader, clock_properties_t* clock_properties, thread_locations_t* thread_locations, uint64_t nb_threads){
+    OTF2_EvtReaderCallbacks* event_callbacks = OTF2_EvtReaderCallbacks_New();
+    OTF2_CALL(OTF2_EvtReaderCallbacks_SetProgramBeginCallback(event_callbacks,
+                                                    &ProgramBeginEvent_Register));
+    for(uint64_t i = 0; i < nb_threads; i++){
+        for(uint64_t j = 0; j < thread_locations[i].nb_thread_locations; j++){
+            OTF2_EvtReader* evt_reader = OTF2_Reader_GetEvtReader(reader, thread_locations[i].thread_locations_ids[j]);
+            OTF2_CALL(OTF2_EvtReader_ApplyClockOffsets(evt_reader, true));
+            OTF2_CALL(OTF2_EvtReader_ApplyMappingTables(evt_reader, true));	
+            OTF2_CALL(OTF2_Reader_RegisterEvtCallbacks(reader,
+                                                    evt_reader,
+                                                    event_callbacks,
+                                                    clock_properties));
+            uint64_t events_read = 1;
+            OTF2_CALL(OTF2_EvtReader_ReadEvents(evt_reader, 1, &events_read));
+            OTF2_CALL(OTF2_Reader_CloseEvtReader(reader, evt_reader)); 
+        }
+    }
+    OTF2_EvtReaderCallbacks_Delete(event_callbacks);
+}
+
 //Function that opens a CTF stream for each location file, sets and registers the event callbacks in the corresponding event reader then reads all the events 
 void* convert_events(void* data_wrapper){
     pthread_data_t* pthread_data = (pthread_data_t*)data_wrapper;
@@ -215,7 +285,7 @@ void* convert_events(void* data_wrapper){
     char* output_directory = pthread_data->output_directory;
     uint64_t clock_frequency = pthread_data->clock_frequency;
     uint64_t nb_locations = pthread_data->thread_locations->nb_thread_locations;
-    uint64_t* locations_ids = pthread_data->thread_locations-> thread_locations_ids;
+    uint64_t* locations_ids = pthread_data->thread_locations->thread_locations_ids;
     
     OTF2_EvtReaderCallbacks* event_callbacks = OTF2_EvtReaderCallbacks_New();
 
@@ -293,8 +363,8 @@ void convert_global_definitions(OTF2_Reader* reader, char* output_directory, clo
     strcpy( stream_path, output_directory);
     strcat( stream_path, stream_name);      
     
-    uint64_t clock = timestamp_to_ns(clock_properties->offset, clock_properties->frequency);
-    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(2000, stream_path, 0, 0, 0, &clock);
+    uint64_t clock = clock_properties->offset - 1 >= 0 ? clock_properties->offset - 1 : 0;
+    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(5000, stream_path, 0, 0, 0, &clock);
     struct barectf_default_ctx* ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);    
     
     user_data_t* user_data = (user_data_t*)malloc(sizeof(user_data_t));

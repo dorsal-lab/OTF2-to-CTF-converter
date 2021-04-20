@@ -37,7 +37,7 @@ trace:
             payload-field-type:
               class: structure
               members:
-                - stringRef: uint64
+                - stringRef: uint32
                 - stringValue: string
           
           GlobalDef_Region:
@@ -45,13 +45,13 @@ trace:
               class: structure
               members:
                 - regionRef: uint32
-                - name: uint64
-                - canonicalName: uint64
-                - description: uint64
+                - name: uint32
+                - canonicalName: uint32
+                - description: uint32
                 - regionRole: uint8
                 - paradigm: uint8
                 - regionFlag: uint32
-                - sourceFile: uint64
+                - sourceFile: uint32
                 - beginLineNumber: uint32
                 - endLineNumber: uint32
 
@@ -60,7 +60,7 @@ trace:
               class: structure
               members:
                 - locationGroupRef: uint32
-                - name: uint64
+                - name: uint32
                 - locationGroupType: uint8
                 - systemTreeNodeRef: uint32
           
@@ -69,7 +69,7 @@ trace:
               class: structure
               members:
                 - locationRef: uint64
-                - name: uint64
+                - name: uint32
                 - locationType: uint8
                 - numberOfEvents: uint64
                 - locationGroupRef: uint32
@@ -79,21 +79,86 @@ trace:
               class: structure
               members:
                 - systemTreeNodeRef: uint32
-                - name: uint64
-                - className: uint64
+                - name: uint32
+                - className: uint32
                 - systemTreeParent: uint32
-                
+          
+          GlobalDef_Group:
+            payload-field-type:
+              class: structure
+              members:
+                - groupRef: uint32
+                - name: uint32
+                - groupType: uint8
+                - paradigm: uint8
+                - groupFlags: uint32
+                - members:
+                    field-type:
+                        class: dynamic-array
+                        element-field-type: uint64
+                        
+          GlobalDef_Comm:
+            payload-field-type:
+              class: structure
+              members:
+                - commRef: uint32
+                - name: uint32
+                - groupRef: uint32
+                - parent: uint32
+          
+          # OTF2 EVENTS 
           Event_Enter:
             payload-field-type:
               class: structure
               members:
                 - locationRef: uint64
                 - regionRef: uint32
+                
           Event_Leave:
-          
             payload-field-type:
               class: structure
               members:
                 - locationRef: uint64
                 - regionRef: uint32
+                
+          Event_MpiSend:
+            payload-field-type:
+              class: structure
+              members:
+                - locationRef: uint64
+                - receiver: uint32
+                - communicator: uint32
+                - msgTag: uint32
+                - msgLength: uint64
 
+          Event_MpiIsend:
+            payload-field-type:
+              class: structure
+              members:
+                - locationRef: uint64
+                - receiver: uint32
+                - communicator: uint32
+                - msgTag: uint32
+                - msgLength: uint64
+                - requestID: uint64
+                
+          Event_MpiRecv:
+            payload-field-type:
+              class: structure
+              members:
+                - locationRef: uint64
+                - sender: uint32
+                - communicator: uint32
+                - msgTag: uint32
+                - msgLength: uint64
+
+          Event_MpiIrecv:
+            payload-field-type:
+              class: structure
+              members:
+                - locationRef: uint64
+                - receiver: uint32
+                - communicator: uint32
+                - msgTag: uint32
+                - msgLength: uint64
+                - requestID: uint64

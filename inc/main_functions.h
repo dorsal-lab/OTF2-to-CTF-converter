@@ -20,6 +20,7 @@ typedef struct {
 
 typedef struct {
     uint32_t filled;
+    uint32_t first_offset_defined;
     uint64_t frequency;
     uint64_t offset;
     uint64_t trace_length;
@@ -33,7 +34,8 @@ typedef struct {
 } pthread_data_t;
 
 uint64_t timestamp_to_ns(uint64_t timestamp, uint64_t clock_frequency);
-void copy_metadata_file(char* output_directory);
+void copy_metadata_file(char* output_directory, uint64_t clock_frequency);
+void get_real_offset(OTF2_Reader* reader, clock_properties_t* clock_properties, thread_locations_t* thread_locations, uint64_t nb_threads);
 thread_locations_t* get_threads_locations_ids(OTF2_Reader* reader, int nb_threads);
 clock_properties_t* get_clock_properties(OTF2_Reader* reader);
 void convert_global_definitions(OTF2_Reader* reader, char* output_directory, clock_properties_t* clock_properties);

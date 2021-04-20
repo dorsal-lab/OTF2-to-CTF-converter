@@ -33,4 +33,19 @@ OTF2_CallbackCode GlobalDef_Region_callback(void * userData, OTF2_RegionRef self
                     uint32_t beginLineNumber,
                     uint32_t endLineNumber);
 
+OTF2_CallbackCode GlobalDef_Group_callback(void* userData,
+                    OTF2_GroupRef self,
+                    OTF2_StringRef name,
+                    OTF2_GroupType groupType,
+                    OTF2_Paradigm paradigm,
+                    OTF2_GroupFlag groupFlags,
+                    uint32_t numberOfMembers,
+                    const uint64_t *members);
+
+OTF2_CallbackCode GlobalDef_Comm_callback(void* userData,
+                    OTF2_CommRef self,
+                    OTF2_StringRef name,
+                    OTF2_GroupRef group,
+                    OTF2_CommRef parent);
+
 void set_global_def_callbacks(OTF2_GlobalDefReaderCallbacks* global_def_callbacks);

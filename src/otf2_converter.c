@@ -57,9 +57,15 @@ int main (int argc, char **argv)
     printf("Number of threads that will be used : %lu\n", nb_threads);
 
 
-    copy_metadata_file(output_directory);
     thread_locations_t* thread_locations = get_threads_locations_ids(reader, nb_threads);
     clock_properties_t* clock_properties = get_clock_properties(reader);
+
+    if(!clock_properties->filled){
+        clock_properties->frequency = 1000000000;
+        clock_properties->offset = 0;
+    }
+    get_real_offset(reader, clock_properties, thread_locations, nb_threads);
+    copy_metadata_file(output_directory, clock_properties->frequency);
     convert_global_definitions(reader, output_directory, clock_properties);
     start_threads(reader, output_directory, nb_threads, thread_locations, clock_properties);
     delete_clock_properties(clock_properties);

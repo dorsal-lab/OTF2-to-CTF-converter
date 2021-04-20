@@ -79,6 +79,47 @@ OTF2_CallbackCode GlobalDef_Region_callback(void * userData,
     return OTF2_CALLBACK_SUCCESS;
 }
 
+//Group global definition callback
+OTF2_CallbackCode GlobalDef_Group_callback(void* userData,
+                    OTF2_GroupRef self,
+                    OTF2_StringRef name,
+                    OTF2_GroupType groupType,
+                    OTF2_Paradigm paradigm,
+                    OTF2_GroupFlag groupFlags,
+                    uint32_t numberOfMembers,
+                    const uint64_t *members){
+    user_data_t* user_data = (user_data_t*)userData;
+    uint64_t member = 0;
+    if(numberOfMembers == 0){
+        numberOfMembers = 1;
+        members = &member;
+    }
+    barectf_trace_GlobalDef_Group(user_data->ctx, 
+        self, 
+        name, 
+        groupType, 
+        paradigm,
+        groupFlags,
+        numberOfMembers,
+        members);
+    return OTF2_CALLBACK_SUCCESS;
+}
+
+//Communicator global definition callback
+OTF2_CallbackCode GlobalDef_Comm_callback(void* userData,
+                    OTF2_CommRef self,
+                    OTF2_StringRef name,
+                    OTF2_GroupRef group,
+                    OTF2_CommRef parent){
+    user_data_t* user_data = (user_data_t*)userData;
+    barectf_trace_GlobalDef_Comm(user_data->ctx, 
+        self, 
+        name, 
+        group, 
+        parent);
+    return OTF2_CALLBACK_SUCCESS;
+}
+
 //Function that set all global definitions callbacks to an OTF2 global definition reader callbacks object
 void set_global_def_callbacks(OTF2_GlobalDefReaderCallbacks* global_def_callbacks){
     OTF2_CALL(OTF2_GlobalDefReaderCallbacks_SetSystemTreeNodeCallback(global_def_callbacks,
@@ -94,5 +135,12 @@ void set_global_def_callbacks(OTF2_GlobalDefReaderCallbacks* global_def_callback
                                                             &GlobalDef_String_callback));
 
     OTF2_CALL(OTF2_GlobalDefReaderCallbacks_SetRegionCallback(global_def_callbacks,
-                                                            &GlobalDef_Region_callback));      
+                                                            &GlobalDef_Region_callback));
+
+    OTF2_CALL(OTF2_GlobalDefReaderCallbacks_SetGroupCallback(global_def_callbacks,
+                                                            &GlobalDef_Group_callback));
+
+    OTF2_CALL(OTF2_GlobalDefReaderCallbacks_SetCommCallback(global_def_callbacks,
+                                                            &GlobalDef_Comm_callback));                                                               
+
 }

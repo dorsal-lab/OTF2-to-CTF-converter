@@ -21,7 +21,7 @@ Example : ```./otf2_converter --njobs=4 --output=CTF_trace traces.otf2```
 
 ## Installation
 To build the converter you will need [OTF2](http://perftools.pages.jsc.fz-juelich.de/cicd/otf2/tags/otf2-2.3/otf2-2.3.tar.gz).
-You will need to set the path to the OTF2 directory : ```export OTF2_PATH=<path to OTF2 directory>''' . By default the path is ```/opt/otf2```  
+You will need to set the path to the OTF2 directory : ```export OTF2_PATH=<path to OTF2 directory>``` . By default the path is ```/opt/otf2```  
 Then go to the directory and run build.sh : ```./build.sh```  
 It will create an executable file OTF2_converter that will be used for the conversion.
  
