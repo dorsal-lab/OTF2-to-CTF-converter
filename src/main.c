@@ -7,27 +7,24 @@
 #include <time.h>
 
 #include <otf2/otf2.h>
-#include "utils.h"
-#include "main_functions.h"
+#include "utilities_functions.h"
 
-#define OTF2_CALL(call) if(call != OTF2_SUCCESS) {printf("OTF2 error : %s\n", OTF2_Error_GetDescription(call)); abort();}
+#define DEFAULT_CLOCK_FREQUENCY 1000000000
+#define DEFAULT_OFFSET 0
 
 int main (int argc, char **argv)
 {
-    int arg_name;  
+    int arg_name = 0;  
     int64_t njobs = -1;
     char output_directory[80] = "";
 
-    while (1){
+    while(arg_name != -1){
         static struct option long_options[] ={
             {"njobs", required_argument, 0, 'n'},
             {"output", required_argument, 0, 'o'},
         };
         int option_index = 0;
         arg_name = getopt_long (argc, argv, "n:o:", long_options, &option_index);
-
-        if (arg_name == -1)
-            break;
 
         switch (arg_name){
             case 'n':
@@ -36,13 +33,15 @@ int main (int argc, char **argv)
             case 'o':
                 strcat(output_directory, optarg);
                 break;
+            case -1:
+                break;
             default:
                 abort ();
         }
     }
 
-    const char* input_trace = argv[argc - 1];
-    OTF2_Reader* reader = OTF2_Reader_Open(input_trace);
+    const char *input_trace = argv[argc - 1];
+    OTF2_Reader *reader = OTF2_Reader_Open(input_trace);
     if(reader == NULL){
         printf("ERROR : Can't open OTF2 trace\n");
         abort();
@@ -57,12 +56,12 @@ int main (int argc, char **argv)
     printf("Number of threads that will be used : %lu\n", nb_threads);
 
 
-    thread_locations_t* thread_locations = get_threads_locations_ids(reader, nb_threads);
-    clock_properties_t* clock_properties = get_clock_properties(reader);
+    thread_locations_t *thread_locations = get_threads_locations_ids(reader, nb_threads);
+    clock_properties_t *clock_properties = get_clock_properties(reader);
 
     if(!clock_properties->filled){
-        clock_properties->frequency = 1000000000;
-        clock_properties->offset = 0;
+        clock_properties->frequency = DEFAULT_CLOCK_FREQUENCY;
+        clock_properties->offset = DEFAULT_OFFSET;
     }
     get_real_offset(reader, clock_properties, thread_locations, nb_threads);
     copy_metadata_file(output_directory, clock_properties->frequency);
@@ -70,5 +69,5 @@ int main (int argc, char **argv)
     start_threads(reader, output_directory, nb_threads, thread_locations, clock_properties);
     delete_clock_properties(clock_properties);
     delete_threads_locations(thread_locations, nb_threads);
-    exit (0);
+    exit(0);
 }

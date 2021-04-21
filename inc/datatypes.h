@@ -4,7 +4,7 @@
 #include "barectf.h" 
 
 typedef struct{
-    struct barectf_default_ctx* ctx;
+    struct barectf_default_ctx *ctx;
     uint64_t clock_frequency;
-    uint64_t* clock_address;
+    uint64_t *clock_address;
 } user_data_t;

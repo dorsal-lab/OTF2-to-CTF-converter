@@ -1,9 +1,3 @@
-utils.o: src/utils.c
-	gcc -std=c99 `otf2-config --cflags` \
-            -c src/utils.c \
-            -o utils.o \
-            -I inc
-
 event_callbacks.o: src/event_callbacks.c
 	gcc -std=c99 `otf2-config --cflags` \
             -c src/event_callbacks.c \
@@ -28,20 +22,20 @@ barectf-platform-linux-fs.o: src/barectf-platform-linux-fs.c
             -o barectf-platform-linux-fs.o \
             -I inc
             
-main_functions.o: src/main_functions.c
+utilities_functions.o: src/utilities_functions.c
 	gcc -std=c99 `otf2-config --cflags` \
-            -c src/main_functions.c \
-            -o main_functions.o \
+            -c src/utilities_functions.c \
+            -o utilities_functions.o \
             -I inc         
 
-otf2_converter.o: src/otf2_converter.c
+main.o: src/main.c
 	gcc -std=c99 `otf2-config --cflags` \
-            -c src/otf2_converter.c \
-            -o otf2_converter.o \
+            -c src/main.c \
+            -o main.o \
             -I inc
 
-otf2_converter: otf2_converter.o utils.o main_functions.o barectf-platform-linux-fs.o event_callbacks.o barectf.o global_def_callbacks.o
-	gcc otf2_converter.o utils.o main_functions.o barectf-platform-linux-fs.o global_def_callbacks.o event_callbacks.o barectf.o\
+otf2_converter: main.o utilities_functions.o barectf-platform-linux-fs.o event_callbacks.o barectf.o global_def_callbacks.o
+	gcc main.o utilities_functions.o barectf-platform-linux-fs.o global_def_callbacks.o event_callbacks.o barectf.o\
             `otf2-config --ldflags` \
             `otf2-config --libs` \
             -pthread \
