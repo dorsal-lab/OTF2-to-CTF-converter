@@ -305,7 +305,7 @@ void get_real_offset(OTF2_Reader* reader, clock_properties_t *clock_properties, 
         for(uint64_t j = 0; j < thread_locations[i].nb_thread_locations; j++){
             OTF2_EvtReader *evt_reader = OTF2_Reader_GetEvtReader(reader, thread_locations[i].thread_locations_ids[j]);
             OTF2_Call(OTF2_EvtReader_ApplyClockOffsets(evt_reader, true));
-            OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, true));	
+            OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, 1));	
             OTF2_Call(OTF2_Reader_RegisterEvtCallbacks(reader,
                                                     evt_reader,
                                                     event_callbacks,
@@ -343,12 +343,21 @@ void * convert_events(void *data_wrapper){
         strcat(stream_path, location_id_str);       
         
         uint64_t clock = 0;
-        struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(2000, stream_path, 0, 0, 0, &clock);
+        struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(4000, stream_path, 0, 0, 0, &clock);
         struct barectf_default_ctx* ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);        
 
+        OTF2_DefReader* def_reader = OTF2_Reader_GetDefReader( reader, locations_ids[i]);
+        if ( def_reader )
+            {
+                uint64_t def_reads = 0;
+                OTF2_Reader_ReadAllLocalDefinitions( reader,
+                                                     def_reader,
+                                                     &def_reads );
+                OTF2_Reader_CloseDefReader( reader, def_reader );
+            }
+
+
         OTF2_EvtReader *evt_reader = OTF2_Reader_GetEvtReader(reader, locations_ids[i]);
-        OTF2_Call(OTF2_EvtReader_ApplyClockOffsets(evt_reader, true));
-        OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, true));	
         user_data_t *user_data = (user_data_t*)malloc(sizeof(user_data_t));
         user_data->ctx = ctx;
         user_data->clock_address = &clock;
@@ -357,10 +366,10 @@ void * convert_events(void *data_wrapper){
                                             evt_reader,
                                             event_callbacks,
                                             user_data));
-        uint64_t events_read = 1;
-        while(events_read){
-            OTF2_Call(OTF2_EvtReader_ReadEvents(evt_reader, 1, &events_read));
-        }
+        OTF2_Call(OTF2_EvtReader_ApplyClockOffsets(evt_reader, 1));
+        OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, 1));	
+        uint64_t events_read = 0;
+        OTF2_Call(OTF2_Reader_ReadAllLocalEvents(reader, evt_reader, &events_read));
         OTF2_Call(OTF2_Reader_CloseEvtReader(reader, evt_reader)); 
         barectf_platform_linux_fs_fini(platform_ctx);
         free(user_data);
@@ -404,7 +413,7 @@ void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clo
     strcat( stream_path, stream_name);      
     
     uint64_t clock = clock_properties->offset - 1 >= 0 ? clock_properties->offset - 1 : 0;
-    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(5000, stream_path, 0, 0, 0, &clock);
+    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(10000, stream_path, 0, 0, 0, &clock);
     struct barectf_default_ctx *ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);    
     
     user_data_t *user_data = (user_data_t*)malloc(sizeof(user_data_t));
