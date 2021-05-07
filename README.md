@@ -4,7 +4,8 @@
 This project allows to convert OTF2 traces into CTF traces using the OTF2 C API and barectf.  
 Several threads are used to optimize the conversion speed. Several locations are assigned to each thread and local event readersare used to read the OTF2 traces concurrently.  
 For each OTF2 location, one CTF stream is created.  
-A CTF stream containing global definitions (in the form of CTF events at the OTF2 global offset timestamp) is also created.
+A CTF stream containing global definitions (in the form of CTF events at the OTF2 global offset timestamp) is also created.  
+The converter is currently in development, it does not yet convert every kind of events in an OTF2 trace.
 
 ## Usage
 To use the converter you have to :  
