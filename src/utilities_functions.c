@@ -51,7 +51,7 @@ void * open_output_directory(char *output_path){
         printf("ERROR : Directory %s already exists.\n", output_path);
         abort();
     }
-    mkdir(output_path, 0700);    
+    mkdir(output_path, 0777);    
 }
 
 //Determines the optimal number of threads or use the one that was given if valid
@@ -78,16 +78,16 @@ void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
       printf("ERROR : OTF2_CONVERTER environment variable is not set.\n");
       abort();
     }
-    char metadata_name[] = "/metadata";
+    char metadata_name[] = "/metadata\0";
 
     //Constructs the path of the metadata file in the converter directory
-    size_t metadata_path_size = strlen(converter_directory) + strlen(metadata_name) + 1;
+    size_t metadata_path_size = strlen(converter_directory) + strlen(metadata_name);
     char *metadata_path = (char *) malloc(metadata_path_size);
     strcpy(metadata_path, converter_directory);
     strcat(metadata_path, metadata_name);
 
     //Constructs the output path for the metadata file
-    size_t output_path_size = strlen(output_directory) + strlen(metadata_name) + 1;
+    size_t output_path_size = strlen(output_directory) + strlen(metadata_name);
     char *output_path = (char *) malloc(output_path_size);
     strcpy(output_path, output_directory);
     strcat(output_path, metadata_name);
@@ -312,6 +312,8 @@ void get_real_offset(OTF2_Reader* reader, clock_properties_t *clock_properties, 
     for(uint64_t i = 0; i < nb_threads; i++){
         for(uint64_t j = 0; j < thread_locations[i].nb_thread_locations; j++){
             OTF2_EvtReader *evt_reader = OTF2_Reader_GetEvtReader(reader, thread_locations[i].thread_locations_ids[j]);
+            OTF2_Call(OTF2_EvtReader_ApplyClockOffsets(evt_reader, true));
+            OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, 1));	
             OTF2_Call(OTF2_Reader_RegisterEvtCallbacks(reader,
                                                     evt_reader,
                                                     event_callbacks,
@@ -374,8 +376,10 @@ void * convert_events(void *data_wrapper){
                                             user_data));
         OTF2_Call(OTF2_EvtReader_ApplyClockOffsets(evt_reader, 1));
         OTF2_Call(OTF2_EvtReader_ApplyMappingTables(evt_reader, 1));	
-        uint64_t events_read = 0;
-        OTF2_Call(OTF2_Reader_ReadAllLocalEvents(reader, evt_reader, &events_read));
+        uint64_t events_read = 1;
+        while(events_read != 0){
+            OTF2_Call(OTF2_EvtReader_ReadEvents(evt_reader, 1, &events_read));
+        }
         OTF2_Call(OTF2_Reader_CloseEvtReader(reader, evt_reader)); 
         barectf_platform_linux_fs_fini(platform_ctx);
         free(user_data);
@@ -412,14 +416,14 @@ void start_threads(OTF2_Reader *reader,
 //for each definition at the global offset timestamp
 void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clock_properties_t *clock_properties){
     size_t stream_path_size;
-    char stream_name[] = "/global_def";
-    stream_path_size = strlen(stream_name) + strlen(output_directory) + 1;
+    char stream_name[] = "/global_def\0";
+    stream_path_size = strlen(stream_name) + strlen(output_directory) ;
     char *stream_path = (char *) malloc(stream_path_size);
     strcpy( stream_path, output_directory);
     strcat( stream_path, stream_name);      
     
     uint64_t clock = clock_properties->offset - 1 >= 0 ? clock_properties->offset - 1 : 0;
-    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(10000, stream_path, 0, 0, 0, &clock);
+    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(2048, stream_path, 0, 0, 0, &clock);
     struct barectf_default_ctx *ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);    
     
     user_data_t *user_data = (user_data_t*)malloc(sizeof(user_data_t));
@@ -438,10 +442,13 @@ void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clo
 
     OTF2_GlobalDefReaderCallbacks_Delete(global_def_callbacks);
 
-    uint64_t definitions_read = 0;
-    OTF2_Call(OTF2_Reader_ReadAllGlobalDefinitions(reader,
-                                                global_def_reader,
-                                                &definitions_read));
+    uint64_t definitions_read = 1;
+    while(definitions_read != 0){
+        OTF2_Call(OTF2_Reader_ReadGlobalDefinitions(reader,
+                                                    global_def_reader,
+                                                    1,
+                                                    &definitions_read));
+    }
     OTF2_Call(OTF2_Reader_CloseGlobalDefReader(reader, global_def_reader));
         
     barectf_platform_linux_fs_fini(platform_ctx);

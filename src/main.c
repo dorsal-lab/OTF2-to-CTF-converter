@@ -24,7 +24,7 @@ int main (int argc, char **argv)
 {
     int arg_name = 0;  
     int64_t njobs = -1;
-    char output_directory[80] = "";
+    char output_directory[2000] = "";
 
     while(arg_name != -1){
         static struct option long_options[] ={

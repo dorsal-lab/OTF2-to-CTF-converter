@@ -92,11 +92,16 @@ trace:
                 - groupType: uint8
                 - paradigm: uint8
                 - groupFlags: uint32
-                - members:
-                    field-type:
-                        class: dynamic-array
-                        element-field-type: uint64
-                        
+                - numberOfMembers: uint32
+
+          GlobalDef_GroupMember:
+            payload-field-type:
+              class: structure
+              members:
+                - groupRef: uint32
+                - rank: uint32
+                - locationRef: uint64
+
           GlobalDef_Comm:
             payload-field-type:
               class: structure
@@ -104,7 +109,7 @@ trace:
                 - commRef: uint32
                 - name: uint32
                 - groupRef: uint32
-                - parent: uint32
+                - parent: uint64
           
           # OTF2 EVENTS 
           Event_Enter:

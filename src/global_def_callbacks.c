@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
+
 #include <otf2/otf2.h>
 #include "barectf-platform-linux-fs.h"
 #include "barectf.h" 
@@ -95,19 +97,20 @@ OTF2_CallbackCode GlobalDef_Group_callback(void *userData,
                     uint32_t numberOfMembers,
                     const uint64_t *members){
     user_data_t *user_data = (user_data_t*)userData;
-    uint64_t member = 0;
-    if(numberOfMembers == 0){
-        numberOfMembers = 1;
-        members = &member;
-    }
+    
     barectf_trace_GlobalDef_Group(user_data->ctx, 
         self, 
         name, 
         groupType, 
         paradigm,
         groupFlags,
-        numberOfMembers,
-        members);
+        numberOfMembers);
+    for(uint32_t i = 0; i < numberOfMembers; i++){
+        barectf_trace_GlobalDef_GroupMember(user_data->ctx,
+            self,
+            i,
+            members[i]);
+    }
     return OTF2_CALLBACK_SUCCESS;
 }
 
