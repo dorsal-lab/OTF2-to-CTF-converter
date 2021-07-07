@@ -78,17 +78,17 @@ void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
       printf("ERROR : OTF2_CONVERTER environment variable is not set.\n");
       abort();
     }
-    char metadata_name[] = "/metadata\0";
+    char metadata_name[] = "/metadata";
 
     //Constructs the path of the metadata file in the converter directory
-    size_t metadata_path_size = strlen(converter_directory) + strlen(metadata_name);
-    char *metadata_path = (char *) malloc(metadata_path_size);
+    size_t metadata_path_size = strlen(converter_directory) + strlen(metadata_name) + 1;
+    char *metadata_path = (char *) malloc(metadata_path_size*sizeof(char));
     strcpy(metadata_path, converter_directory);
     strcat(metadata_path, metadata_name);
 
     //Constructs the output path for the metadata file
-    size_t output_path_size = strlen(output_directory) + strlen(metadata_name);
-    char *output_path = (char *) malloc(output_path_size);
+    size_t output_path_size = strlen(output_directory) + strlen(metadata_name) + 1;
+    char *output_path = (char *) malloc(output_path_size*sizeof(char));
     strcpy(output_path, output_directory);
     strcat(output_path, metadata_name);
 
@@ -129,7 +129,7 @@ void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
     {
         count++;
 
-        /* If current line is line to replace */
+       
         if (count == tracer_line_number)
             fputs(tracer_line, target);
         if (count == clock_frequency_line_number)
@@ -416,9 +416,9 @@ void start_threads(OTF2_Reader *reader,
 //for each definition at the global offset timestamp
 void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clock_properties_t *clock_properties){
     size_t stream_path_size;
-    char stream_name[] = "/global_def\0";
-    stream_path_size = strlen(stream_name) + strlen(output_directory) ;
-    char *stream_path = (char *) malloc(stream_path_size);
+    char stream_name[] = "/global_def";
+    stream_path_size = strlen(stream_name) + strlen(output_directory) + 1;
+    char *stream_path = (char *) malloc(stream_path_size * sizeof(char));
     strcpy( stream_path, output_directory);
     strcat( stream_path, stream_name);      
     
