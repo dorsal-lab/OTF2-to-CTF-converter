@@ -137,14 +137,14 @@ OTF2_CallbackCode MpiIrecv_callback(OTF2_LocationRef location,
                     OTF2_TimeStamp time, uint64_t event_position,
                     void *userData,
                     OTF2_AttributeList *attributes,
-                    uint32_t receiver,
+                    uint32_t sender,
                     OTF2_CommRef communicator,
                     uint32_t msgTag,
                     uint64_t msgLength,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiIrecv(user_data->ctx, location, receiver, communicator, msgTag, msgLength, requestID);
+    barectf_trace_Event_MpiIrecv(user_data->ctx, location, sender, communicator, msgTag, msgLength, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 

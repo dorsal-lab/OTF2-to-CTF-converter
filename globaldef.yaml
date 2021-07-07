@@ -1,0 +1,337 @@
+event-record-types:
+  GlobalDef_ClockProperties:
+    payload-field-type:
+      class: structure
+      members:
+        - timerResolution: uint64
+        - globalOffset: uint64
+        - traceLength: uint64
+
+
+  GlobalDef_Paradigm:
+    payload-field-type:
+      class: structure
+      members:
+        - paradigm: OTF2_Paradigm
+        - name: OTF2_StringRef
+        - paradigmClass: OTF2_ParadigmClass
+
+
+  GlobalDef_ParadigmProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - paradigm: OTF2_Paradigm
+        - property: OTF2_ParadigmProperty
+
+  GlobalDef_IoParadigm:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_IoParadigmRef
+        - identification: OTF2_StringRef
+        - name: OTF2_StringRef
+        - ioParadigmClass: OTF2_IoParadigmClass
+        - ioParadigmFlags: OTF2_IoParadigmFlag
+        - numberOfProperties: uint8
+  
+  GlobalDef_IoParadigmProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - ioParadigm: OTF2_IoParadigmRef
+        - ioParadigmProperty: OTF2_IoParadigmProperty
+
+  GlobalDef_String:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_StringRef
+        - stringValue: string
+
+  GlobalDef_Attribute:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_AttributeRef
+        - name: OTF2_StringRef
+        - description: OTF2_StringRef
+        - type: OTF2_Type
+
+  GlobalDef_SystemTreeNode:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_SystemTreeNodeRef
+        - name: OTF2_StringRef
+        - className: OTF2_StringRef
+        - systemTreeParent: OTF2_SystemTreeNodeRef
+
+  GlobalDef_LocationGroup:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_LocationGroupRef
+        - name: OTF2_StringRef
+        - locationGroupType: OTF2_LocationGroupType
+        - systemTreeParent: OTF2_SystemTreeNodeRef
+
+  GlobalDef_Location:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_LocationRef
+        - name: OTF2_StringRef
+        - locationType: OTF2_LocationType
+        - numberOfEvents: uint64
+        - locationGroup: OTF2_LocationGroupRef
+
+  GlobalDef_Region:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_RegionRef
+        - name: OTF2_StringRef
+        - canonicalName: OTF2_StringRef
+        - description: OTF2_StringRef
+        - regionRole: OTF2_RegionRole
+        - paradigm: OTF2_Paradigm
+        - regionFlag: OTF2_RegionFlag
+        - sourceFile: OTF2_StringRef
+        - beginLineNumber: uint32
+        - endLineNumber: uint32
+
+  GlobalDef_Callsite:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CallsiteRef
+        - sourceFile: OTF2_StringRef
+        - lineNumber: uint32
+        - enteredRegion: OTF2_RegionRef
+        - leftRegion: OTF2_RegionRef
+
+  GlobalDef_Callpath:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CallpathRef
+        - parent: OTF2_CallpathRef
+        - region: OTF2_RegionRef
+
+  GlobalDef_Group:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_GroupRef
+        - name: OTF2_StringRef
+        - groupType: OTF2_GroupType
+        - paradigm: OTF2_Paradigm
+        - groupFlags: OTF2_GroupFlag
+        - numberOfMembers: uint32
+
+  GlobalDef_GroupMember:
+    payload-field-type:
+      class: structure
+      members:
+        - group: OTF2_GroupRef
+        - rank: uint32
+        - location: OTF2_LocationRef
+
+  GlobalDef_MetricMember:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_MetricMemberRef
+        - name: OTF2_StringRef
+        - description: OTF2_StringRef
+        - metricType: OTF2_MetricType
+        - metricMode: OTF2_MetricMode
+        - valueType: OTF2_Type
+        - base: OTF2_Base
+        - exponent: int64
+        - unit: OTF2_StringRef
+
+  GlobalDef_MetricClass:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_MetricRef
+        - metricMembers:
+            field-type:
+              class: dynamic-array
+              element-field-type: OTF2_MetricMemberRef
+        - metricOccurrence: OTF2_MetricOccurrence
+        - recorderKind: OTF2_RecorderKind
+
+  GlobalDef_MetricInstance:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_MetricRef
+        - metricClass: OTF2_MetricRef
+        - recorder: OTF2_LocationRef
+        - metricScope: OTF2_MetricScope
+        - scope: uint64
+
+  GlobalDef_Comm:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CommRef
+        - name: OTF2_StringRef
+        - group: OTF2_GroupRef
+        - parent: OTF2_CommRef
+
+  GlobalDef_Parameter:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_ParameterRef
+        - name: OTF2_StringRef
+        - parameterType: OTF2_ParameterType
+
+  GlobalDef_RmaWin:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_RmaWinRef
+        - name: OTF2_StringRef
+        - comm: OTF2_CommRef
+
+  GlobalDef_MetricClassRecorder:
+    payload-field-type:
+      class: structure
+      members:
+        - metric: OTF2_MetricRef
+        - recorder: OTF2_LocationRef
+
+  GlobalDef_SystemTreeNodeProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - systemTreeNode: OTF2_SystemTreeNodeRef
+        - name: OTF2_StringRef
+
+  GlobalDef_SystemTreeNodeDomain:
+    payload-field-type:
+      class: structure
+      members:
+        - systemTreeNode: OTF2_SystemTreeNodeRef
+        - systemTreeDomain: OTF2_SystemTreeDomain
+
+  GlobalDef_LocationGroupProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - locationGroup: OTF2_LocationGroupRef
+        - name: OTF2_StringRef
+
+  GlobalDef_LocationProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - location: OTF2_LocationRef
+        - name: OTF2_StringRef
+
+  GlobalDef_CartDimension:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CartDimensionRef
+        - name: OTF2_StringRef
+        - size: uint32
+        - cartPeriodicity: OTF2_CartPeriodicity
+
+  GlobalDef_CartTopology:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CartTopologyRef
+        - name: OTF2_StringRef
+        - communicator: OTF2_CommRef
+        - cartDimensions:
+            field-type:
+              class: dynamic-array
+              element-field-type: OTF2_CartDimensionRef
+
+  GlobalDef_CartCoordinate:
+    payload-field-type:
+      class: structure
+      members:
+        - cartTopology: OTF2_CartTopologyRef
+        - rank: uint32
+        - coordinates:
+            field-type:
+              class: dynamic-array
+              element-field-type: uint32
+
+  GlobalDef_SourceCodeLocation:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_SourceCodeLocationRef
+        - file: OTF2_StringRef
+        - lineNumber: uint32
+
+  GlobalDef_CallingContext:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_CallingContextRef
+        - region: OTF2_RegionRef
+        - sourceCodeLocation: OTF2_SourceCodeLocationRef
+        - parent: OTF2_CallingContextRef
+
+  GlobalDef_CallingContextProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - callingContext: OTF2_CallingContextRef
+        - name: OTF2_StringRef
+
+  GlobalDef_InterruptGenerator:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_InterruptGeneratorRef
+        - name: OTF2_StringRef
+        - interruptGeneratorMode: OTF2_InterruptGeneratorMode
+        - base: OTF2_Base
+        - exponent: int64
+        - period: uint64
+
+  GlobalDef_IoFileProperty:
+    payload-field-type:
+      class: structure
+      members:
+        - ioFile: OTF2_IoFileRef
+        - name: OTF2_StringRef
+
+  GlobalDef_IoRegularFile:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_IoFileRef
+        - name: OTF2_StringRef
+        - scope: OTF2_SystemTreeNodeRef
+
+  GlobalDef_IoDirectory:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_IoFileRef
+        - name: OTF2_StringRef
+        - scope: OTF2_SystemTreeNodeRef
+
+  GlobalDef_IoHandle:
+    payload-field-type:
+      class: structure
+      members:
+        - self: OTF2_IoHandleRef
+        - name: OTF2_StringRef
+        - file: OTF2_IoFileRef
+        - ioParadigm: OTF2_IoParadigmRef
+        - ioHandleFlags: OTF2_IoHandleFlag
+        - comm: OTF2_CommRef
+        - parent: OTF2_IoHandleRef

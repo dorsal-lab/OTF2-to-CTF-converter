@@ -5,6 +5,9 @@
  *This source code is licensed under the BSD-style license found in the
  *LICENSE file in the root directory of this source tree. 
  */
+ 
+#ifndef _UTILITIES_FUNCTIONS_H
+#define _UTILITIES_FUNCTIONS_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -58,3 +61,5 @@ void convert_global_definitions(OTF2_Reader *reader, char* output_directory, clo
 void start_threads(OTF2_Reader *reader, char *output_directory, uint64_t nb_threads, thread_locations_t *thread_locations, clock_properties_t *clock_properties);
 void delete_threads_locations(thread_locations_t *thread_locations, int nb_threads);
 void delete_clock_properties(clock_properties_t *clock_properties);
+
+#endif

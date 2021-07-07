@@ -8,7 +8,9 @@ trace:
     # Add standard field type aliases
     $include:
       - stdint.yaml
+      - stdreal.yaml
       - stdmisc.yaml
+      - otf2_aliases.yaml
 
     # Native byte order is little-endian
     native-byte-order: little-endian
@@ -30,108 +32,39 @@ trace:
 
         # Default clock type: `default`
         $default-clock-type-name: default
-
+        
+        $include: 
+          - globaldefattributes.yaml
+          - globaldef.yaml
 
         event-record-types:
-          GlobalDef_String:
-            payload-field-type:
-              class: structure
-              members:
-                - stringRef: uint32
-                - stringValue: string
-          
-          GlobalDef_Region:
-            payload-field-type:
-              class: structure
-              members:
-                - regionRef: uint32
-                - name: uint32
-                - canonicalName: uint32
-                - description: uint32
-                - regionRole: uint8
-                - paradigm: uint8
-                - regionFlag: uint32
-                - sourceFile: uint32
-                - beginLineNumber: uint32
-                - endLineNumber: uint32
+        
 
-          GlobalDef_LocationGroup:
-            payload-field-type:
-              class: structure
-              members:
-                - locationGroupRef: uint32
-                - name: uint32
-                - locationGroupType: uint8
-                - systemTreeNodeRef: uint32
-          
-          GlobalDef_Location:
-            payload-field-type:
-              class: structure
-              members:
-                - locationRef: uint64
-                - name: uint32
-                - locationType: uint8
-                - numberOfEvents: uint64
-                - locationGroupRef: uint32
-                
-          GlobalDef_SystemTreeNode:
-            payload-field-type:
-              class: structure
-              members:
-                - systemTreeNodeRef: uint32
-                - name: uint32
-                - className: uint32
-                - systemTreeParent: uint32
-          
-          GlobalDef_Group:
-            payload-field-type:
-              class: structure
-              members:
-                - groupRef: uint32
-                - name: uint32
-                - groupType: uint8
-                - paradigm: uint8
-                - groupFlags: uint32
-                - numberOfMembers: uint32
 
-          GlobalDef_GroupMember:
-            payload-field-type:
-              class: structure
-              members:
-                - groupRef: uint32
-                - rank: uint32
-                - locationRef: uint64
 
-          GlobalDef_Comm:
-            payload-field-type:
-              class: structure
-              members:
-                - commRef: uint32
-                - name: uint32
-                - groupRef: uint32
-                - parent: uint64
+        #GLOBAL DEFINITIONS
           
           # OTF2 EVENTS 
           Event_Enter:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
-                - regionRef: uint32
+                - locationID: uint64
+                - region: uint32
                 
           Event_Leave:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
-                - regionRef: uint32
+                - locationID: uint64
+                - region: uint32
                 
         #MPI EVENTS        
           Event_MpiSend:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - receiver: uint32
                 - communicator: uint32
                 - msgTag: uint32
@@ -141,7 +74,7 @@ trace:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - receiver: uint32
                 - communicator: uint32
                 - msgTag: uint32
@@ -152,21 +85,21 @@ trace:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - requestID: uint64
 
           Event_MpiIrecvRequest:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - requestID: uint64                
                 
           Event_MpiRecv:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - sender: uint32
                 - communicator: uint32
                 - msgTag: uint32
@@ -176,7 +109,7 @@ trace:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - receiver: uint32
                 - communicator: uint32
                 - msgTag: uint32
@@ -187,29 +120,31 @@ trace:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - requestID: uint64
 
           Event_MpiRequestCancelled:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
                 - requestID: uint64                
 
           Event_MpiCollectiveBegin:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64
+                - locationID: uint64
 
           Event_MpiCollectiveEnd:
             payload-field-type:
               class: structure
               members:
-                - locationRef: uint64  
+                - locationID: uint64  
                 - collectiveOp: uint8
                 - communicator: uint32
                 - root: uint32
                 - sizeSent: uint64
-                - sizeReceived: uint64                    
+                - sizeReceived: uint64
+
+

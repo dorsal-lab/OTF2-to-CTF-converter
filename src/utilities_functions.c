@@ -423,7 +423,7 @@ void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clo
     strcat( stream_path, stream_name);      
     
     uint64_t clock = clock_properties->offset - 1 >= 0 ? clock_properties->offset - 1 : 0;
-    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(2048, stream_path, 0, 0, 0, &clock);
+    struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(10000, stream_path, 0, 0, 0, &clock);
     struct barectf_default_ctx *ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);    
     
     user_data_t *user_data = (user_data_t*)malloc(sizeof(user_data_t));
@@ -442,13 +442,10 @@ void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clo
 
     OTF2_GlobalDefReaderCallbacks_Delete(global_def_callbacks);
 
-    uint64_t definitions_read = 1;
-    while(definitions_read != 0){
-        OTF2_Call(OTF2_Reader_ReadGlobalDefinitions(reader,
-                                                    global_def_reader,
-                                                    1,
-                                                    &definitions_read));
-    }
+    uint64_t definitions_read = 0;
+    OTF2_Call(OTF2_Reader_ReadAllGlobalDefinitions(reader,
+                                                global_def_reader,
+                                                &definitions_read));
     OTF2_Call(OTF2_Reader_CloseGlobalDefReader(reader, global_def_reader));
         
     barectf_platform_linux_fs_fini(platform_ctx);
