@@ -438,6 +438,28 @@ OTF2_CallbackCode GlobalDef_IoHandle_callback(void *userData,
     return OTF2_CALLBACK_SUCCESS;
 }
 
+//IoPreCreatedHandleState global definition callback
+OTF2_CallbackCode GlobalDef_IoPreCreatedHandleState_callback(void *userData,
+                    OTF2_IoHandleRef ioHandle,
+                    OTF2_IoAccessMode mode,
+                    OTF2_IoStatusFlag statusFlags){
+    user_data_t *user_data = (user_data_t*)userData;
+    barectf_trace_GlobalDef_IoPreCreatedHandleState(user_data->ctx, ioHandle, mode, statusFlags);
+    return OTF2_CALLBACK_SUCCESS;
+}
+
+//CallpathParameter global definition callback
+OTF2_CallbackCode GlobalDef_CallpathParameter_callback(void *userData,
+                    OTF2_CallpathRef callpath,
+                    OTF2_ParameterRef parameter,
+                    OTF2_Type type,
+                    OTF2_AttributeValue value){
+    user_data_t *user_data = (user_data_t*)userData;
+    barectf_trace_GlobalDef_CallpathParameter(user_data->ctx, callpath, parameter);
+    trace_global_def_attribute(user_data, type, value);
+    return OTF2_CALLBACK_SUCCESS;
+}
+
 //Function that set all global definitions callbacks to an OTF2 global definition reader callbacks object
 void set_global_def_callbacks(OTF2_GlobalDefReaderCallbacks *global_def_callbacks){
     OTF2_Call(OTF2_GlobalDefReaderCallbacks_SetClockPropertiesCallback(global_def_callbacks,
@@ -544,4 +566,10 @@ void set_global_def_callbacks(OTF2_GlobalDefReaderCallbacks *global_def_callback
 
     OTF2_Call(OTF2_GlobalDefReaderCallbacks_SetIoHandleCallback(global_def_callbacks,
                                                             &GlobalDef_IoHandle_callback));
+
+    OTF2_Call(OTF2_GlobalDefReaderCallbacks_SetIoPreCreatedHandleStateCallback(global_def_callbacks,
+                                                            &GlobalDef_IoPreCreatedHandleState_callback));
+
+    OTF2_Call(OTF2_GlobalDefReaderCallbacks_SetCallpathParameterCallback(global_def_callbacks,
+                                                            &GlobalDef_CallpathParameter_callback));
 }

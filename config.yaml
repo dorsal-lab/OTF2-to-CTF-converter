@@ -34,8 +34,8 @@ trace:
         $default-clock-type-name: default
         
         $include: 
-          - globaldefattributes.yaml
-          - globaldef.yaml
+          - global_def_attributes.yaml
+          - global_def.yaml
 
         event-record-types:
         

@@ -26,6 +26,8 @@ $field-type-aliases:
   OTF2_IoFileRef: uint32
   OTF2_IoHandleRef: uint32
   OTF2_IoHandleFlag: uint32
+  OTF2_IoAccessMode: uint8
+  OTF2_IoStatusFlag: uint32
   OTF2_SystemTreeNodeRef: uint32
   OTF2_LocationGroupRef: uint32
   OTF2_LocationGroupType: uint8
