@@ -1,0 +1,18 @@
+event-record-types:
+  MetricValue_Int64:
+    payload-field-type:
+      class: structure
+      members:
+        - metricValue: int64
+
+  MetricValue_UInt64:
+    payload-field-type:
+      class: structure
+      members:
+        - metricValue: uint64
+
+  MetricValue_Double:
+    payload-field-type:
+      class: structure
+      members:
+        - metricValue: double

@@ -1,0 +1,635 @@
+event-record-types:
+  Event_BufferFlush:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - stopTime: OTF2_TimeStamp
+
+  Event_MeasurementOnOff:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - measurementMode: OTF2_MeasurementMode
+
+  Event_Enter:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - region: OTF2_RegionRef
+
+  Event_Leave:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - region: OTF2_RegionRef
+
+  Event_MpiSend:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - receiver: uint32
+        - communicator: OTF2_CommRef
+        - msgTag: uint32
+        - msgLength: uint64
+
+  Event_MpiIsend:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - receiver: uint32
+        - communicator: OTF2_CommRef
+        - msgTag: uint32
+        - msgLength: uint64
+        - requestID: uint64
+
+  Event_MpiIsendComplete:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - requestID: uint64
+
+  Event_MpiIrecvRequest:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - requestID: uint64
+
+  Event_MpiRecv:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - sender: uint32
+        - communicator: OTF2_CommRef
+        - msgTag: uint32
+        - msgLength: uint64
+
+  Event_MpiIrecv:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - receiver: uint32
+        - communicator: OTF2_CommRef
+        - msgTag: uint32
+        - msgLength: uint64
+        - requestID: uint64
+
+  Event_MpiRequestTest:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - requestID: uint64
+
+  Event_MpiRequestCancelled:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - requestID: uint64
+
+  Event_MpiCollectiveBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+
+  Event_MpiCollectiveEnd:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - collectiveOp: OTF2_CollectiveOp
+        - communicator: OTF2_CommRef
+        - root: uint32
+        - sizeSent: uint64
+        - sizeReceived: uint64
+
+  Event_OmpFork:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - numberOfRequestedThreads: uint32
+
+  Event_OmpJoin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+
+  Event_OmpAcquireLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - lockID: uint32
+        - acquisitionOrder: uint32
+
+  Event_OmpReleaseLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - lockID: uint32
+        - acquisitionOrder: uint32
+
+  Event_OmpTaskCreate:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - taskID: uint64
+
+  Event_OmpTaskSwitch:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - taskID: uint64
+
+  Event_OmpTaskComplete:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - taskID: uint64
+
+  Event_Metric:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - metric: OTF2_MetricRef
+        - numberOfMetrics: uint8
+
+  Event_ParameterString:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - parameter: OTF2_ParameterRef
+        - stringID: OTF2_StringRef
+
+  Event_ParameterInt:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - parameter: OTF2_ParameterRef
+        - value: int64
+
+  Event_ParameterUnsignedInt:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - parameter: OTF2_ParameterRef
+        - value: uint64
+
+  Event_RmaWinCreate:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+
+  Event_RmaWinDestroy:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+
+  Event_RmaCollectiveBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+
+  Event_RmaCollectiveEnd:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - collectiveOp: OTF2_CollectiveOp
+        - syncLevel: OTF2_RmaSyncLevel
+        - win: OTF2_RmaWinRef
+        - root: uint32
+        - bytesSent: uint64
+        - bytesReceived: uint64
+
+  Event_RmaGroupSync:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - syncLevel: OTF2_RmaSyncLevel
+        - win: OTF2_RmaWinRef
+        - group: OTF2_GroupRef
+
+  Event_RmaRequestLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - lockId: uint64
+        - lockType: OTF2_LockType
+
+  Event_RmaAcquireLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - lockId: uint64
+        - lockType: OTF2_LockType
+
+  Event_RmaTryLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - lockId: uint64
+        - lockType: OTF2_LockType
+
+  Event_RmaReleaseLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - lockId: uint64
+
+  Event_RmaSync:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - syncType: OTF2_RmaSyncType
+
+  Event_RmaWaitChange:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+
+  Event_RmaPut:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - bytes: uint64
+        - matchingId: uint64
+
+  Event_RmaGet:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - bytes: uint64
+        - matchingId: uint64
+
+  Event_RmaAtomic:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - remote: uint32
+        - type: OTF2_RmaAtomicType
+        - bytesSent: uint64
+        - bytesReceived: uint64
+        - matchingId: uint64
+
+  Event_RmaOpCompleteBlocking:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - matchingId: uint64
+
+  Event_RmaOpCompleteNonBlocking:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - matchingId: uint64
+
+  Event_RmaOpTest:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - matchingId: uint64
+
+  Event_RmaOpCompleteRemote:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - win: OTF2_RmaWinRef
+        - matchingId: uint64
+
+  Event_ThreadFork:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - model: OTF2_Paradigm
+        - matchnumberOfRequestedThreadsingId: uint32
+
+  Event_ThreadJoin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - model: OTF2_Paradigm
+
+  Event_ThreadTeamBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadTeam: OTF2_CommRef
+
+  Event_ThreadTeamEnd:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadTeam: OTF2_CommRef
+
+  Event_ThreadAcquireLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - model: OTF2_Paradigm
+        - lockID: uint32
+        - acquisitionOrder: uint32
+
+  Event_ThreadReleaseLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - model: OTF2_Paradigm
+        - lockID: uint32
+        - acquisitionOrder: uint32
+
+  Event_ThreadTaskCreate:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadTeam: OTF2_CommRef
+        - creatingThread: uint32
+        - generationNumber: uint32
+
+  Event_ThreadTaskSwitch:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadTeam: OTF2_CommRef
+        - creatingThread: uint32
+        - generationNumber: uint32
+
+  Event_ThreadTaskComplete:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadTeam: OTF2_CommRef
+        - creatingThread: uint32
+        - generationNumber: uint32
+
+  Event_ThreadCreate:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadContingent: OTF2_CommRef
+        - sequenceCount: uint64
+
+  Event_ThreadBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadContingent: OTF2_CommRef
+        - sequenceCount: uint64
+
+  Event_ThreadWait:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadContingent: OTF2_CommRef
+        - sequenceCount: uint64
+
+  Event_ThreadEnd:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - threadContingent: OTF2_CommRef
+        - sequenceCount: uint64
+
+  Event_CallingContextEnter:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - callingContext: OTF2_CallingContextRef
+        - unwindDistance: uint32
+
+  Event_CallingContextLeave:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - callingContext: OTF2_CallingContextRef
+
+  Event_CallingContextSample:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - callingContext: OTF2_CallingContextRef
+        - unwindDistance: uint32
+        - interruptGenerator: OTF2_InterruptGeneratorRef
+
+  Event_IoCreateHandle:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - mode: OTF2_IoAccessMode
+        - creationFlags: OTF2_IoCreationFlag
+        - statusFlags: OTF2_IoStatusFlag
+
+  Event_IoDestroyHandle:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+
+  Event_IoDuplicateHandle:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - oldHandle: OTF2_IoHandleRef
+        - newHandle: OTF2_IoHandleRef
+        - statusFlags: OTF2_IoStatusFlag
+
+  Event_IoSeek:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - offsetRequest: int64
+        - whence: OTF2_IoSeekOption
+        - offsetResult: uint64
+
+  Event_IoChangeStatusFlags:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - statusFlags: OTF2_IoStatusFlag
+
+  Event_IoDeleteFile:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - ioParadigm: OTF2_IoParadigmRef
+        - file: OTF2_IoFileRef
+
+  Event_IoOperationBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - mode: OTF2_IoOperationMode
+        - operationFlags: OTF2_IoOperationFlag
+        - bytesRequest: uint64
+        - matchingId: uint64
+
+  Event_IoOperationTest:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - matchingId: uint64
+
+  Event_IoOperationIssued:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - matchingId: uint64
+
+  Event_IoOperationComplete:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - bytesResult: uint64
+        - matchingId: uint64
+
+  Event_IoOperationCancelled:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - matchingId: uint64
+
+  Event_IoAcquireLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - lockType: OTF2_LockType
+
+  Event_IoReleaseLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - lockType: OTF2_LockType
+
+  Event_IoTryLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - lockType: OTF2_LockType
+
+  Event_IoTryLock:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - handle: OTF2_IoHandleRef
+        - lockType: OTF2_LockType
+
+  Event_ProgramBegin:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - programName: OTF2_StringRef
+
+  Event_ProgramEnd:
+    payload-field-type:
+      class: structure
+      members:
+        - locationID: OTF2_LocationRef
+        - exitStatus: int64
+
+  Event_ProgramArgument:
+    payload-field-type:
+      class: structure
+      members:
+        - programArgument: OTF2_StringRef

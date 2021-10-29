@@ -1,0 +1,168 @@
+event-record-types:  
+  EventAttribute_UInt8:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: uint8
+
+  EventAttribute_UInt16:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: uint16
+
+  EventAttribute_UInt32:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: uint32
+
+  EventAttribute_UInt64:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: uint64
+
+  EventAttribute_Int8:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: int8
+
+  EventAttribute_Int16:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: int16
+
+  EventAttribute_Int32:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: int32
+
+  EventAttribute_Int64:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: int64
+
+  EventAttribute_Float:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: float
+
+  EventAttribute_Double:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: double
+
+  EventAttribute_String:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_StringRef
+
+  EventAttribute_Attribute:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_AttributeRef
+
+  EventAttribute_Location:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_LocationRef
+
+  EventAttribute_Region:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_RegionRef
+
+  EventAttribute_Group:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_GroupRef
+
+  EventAttribute_Metric:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_MetricRef
+
+  EventAttribute_Comm:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_CommRef
+
+  EventAttribute_Parameter:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_ParameterRef
+
+  EventAttribute_RmaWin:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_RmaWinRef
+
+  EventAttribute_SourceCodeLocation:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_SourceCodeLocationRef
+
+  EventAttribute_CallingContext:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_CallingContextRef
+
+  EventAttribute_InterruptGenerator:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_InterruptGeneratorRef
+
+  EventAttribute_IoFile:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_IoFileRef
+
+  EventAttribute_IoHandle:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_IoHandleRef

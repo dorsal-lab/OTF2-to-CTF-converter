@@ -1,0 +1,77 @@
+  GlobalDefAttribute_UInt16:
+    payload-field-type:
+      class: structure
+      members:
+        - value: uint16
+
+  GlobalDefAttribute_UInt32:
+    payload-field-type:
+      class: structure
+      members:
+        - value: uint32
+
+  GlobalDefAttribute_UInt64:
+    payload-field-type:
+      class: structure
+      members:
+        - value: uint64
+
+  GlobalDefAttribute_Int8:
+    payload-field-type:
+      class: structure
+      members:
+        - value: int8
+
+  GlobalDefAttribute_Int16:
+    payload-field-type:
+      class: structure
+      members:
+        - value: int16
+
+  GlobalDefAttribute_Int32:
+    payload-field-type:
+      class: structure
+      members:
+        - value: int32
+
+  GlobalDefAttribute_Int64:
+    payload-field-type:
+      class: structure
+      members:
+        - value: int64
+
+  GlobalDefAttribute_Float:
+    payload-field-type:
+      class: structure
+      members:
+        - value: float
+
+  GlobalDefAttribute_Double:
+    payload-field-type:
+      class: structure
+      members:
+        - value: double
+
+  GlobalDefAttribute_StringRef:
+    payload-field-type:
+      class: structure
+      members:
+        - value: OTF2_StringRef
+
+  GlobalDefAttribute_AttributeRef:
+    payload-field-type:
+      class: structure
+      members:
+        - value: OTF2_AttributeRef
+
+  GlobalDefAttribute_LocationRef:
+    payload-field-type:
+      class: structure
+      members:
+        - value: OTF2_LocationRef
+
+  GlobalDefAttribute_RegionRef:
+    payload-field-type:
+      class: structure
+      members:
+        - value: OTF2_RegionRef

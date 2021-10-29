@@ -49,3 +49,14 @@ $field-type-aliases:
   OTF2_CartDimensionRef: uint32
   OTF2_CartPeriodicity: uint8
   OTF2_CartTopologyRef: uint32
+  OTF2_TimeStamp: uint64
+  OTF2_MeasurementMode: uint8
+  OTF2_CollectiveOp: uint8
+  OTF2_RmaSyncLevel: uint32
+  OTF2_LockType: uint8
+  OTF2_RmaSyncType: uint8
+  OTF2_RmaAtomicType: uint8
+  OTF2_IoCreationFlag: uint32
+  OTF2_IoSeekOption: uint8
+  OTF2_IoOperationMode: uint8
+  OTF2_IoOperationFlag: uint32
