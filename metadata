@@ -57,7 +57,7 @@ trace {
 
 env {
 	domain = "bare";
-	tracer_name = "barectf";
+	tracer_name = "otf2";
 	tracer_major = 3;
 	tracer_minor = 0;
 	tracer_patch = 1;

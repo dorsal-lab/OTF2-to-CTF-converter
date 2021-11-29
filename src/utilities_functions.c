@@ -6,6 +6,8 @@
  *LICENSE file in the root directory of this source tree. 
  */
 
+#define _POSIX_C_SOURCE 199309L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -14,6 +16,8 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <string.h>
+#include <time.h>
+#include <limits.h>
 
 #include <otf2/otf2.h>
 #include "barectf-platform-linux-fs.h"
@@ -22,7 +26,11 @@
 #include "event_callbacks.h"
 #include "global_def_callbacks.h"
 
+#define ITERATIONS_NUMBER 50
 #define BUFFER_SIZE 1000
+#define CLOCK_FREQUENCY_LINE_NUMBER 69
+#define OFFSET_S_LINE_NUMBER 71
+#define OFFSET_LINE_NUMBER 72
 
 //Error code checking for OTF2 API calls
 void OTF2_Call(OTF2_ErrorCode code){
@@ -70,6 +78,37 @@ uint64_t get_thread_number(OTF2_Reader *reader, int64_t njobs){
     return nprocs;
 }
 
+//Function that computes the time as a long from a timespec structure
+long compute_time(struct timespec timespec_struct){
+	return 1000000000*(long)timespec_struct.tv_sec + timespec_struct.tv_nsec;
+}
+
+//Function that calculates the offsets (seconds and nanoseconds) to the Epoch
+void calculate_offsets(long* offset_s, long* offset_ns){
+	long min_delta = LONG_MAX; 
+	long current_delta, time_realtime, time_monotonic0, time_monotonic1, offset, time_monotonic_average;
+	struct timespec time_monotonic0_ts, time_monotonic1_ts, time_realtime_ts;
+	
+	for(int step = 0; step < ITERATIONS_NUMBER; step++){
+
+		clock_gettime( CLOCK_MONOTONIC, &time_monotonic0_ts);
+		clock_gettime( CLOCK_REALTIME, &time_realtime_ts);
+		clock_gettime( CLOCK_MONOTONIC, &time_monotonic1_ts);
+
+		time_realtime = compute_time(time_realtime_ts);
+		time_monotonic0 = compute_time(time_monotonic0_ts);
+		time_monotonic1 = compute_time(time_monotonic1_ts);
+		current_delta =  time_monotonic1 - time_monotonic0;
+		if(current_delta < min_delta){
+			min_delta = current_delta;
+			time_monotonic_average = (time_monotonic1 + time_monotonic0)/2;
+			offset = time_realtime - time_monotonic_average;
+			*offset_s = offset/1000000000;
+			*offset_ns = offset%1000000000;
+		}
+	}	
+}
+
 //Function that copy the metadata file from the converter directory to the given output directory
 void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
     const char *converter_directory = getenv("OTF2_CONVERTER");
@@ -113,29 +152,37 @@ void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
 
    //Copy the file line by line. Change trace name line and clock frequency line
     char buffer[BUFFER_SIZE];
-    char newline[BUFFER_SIZE];
-    int count = 0;
-    
 
-    int tracer_line_number = 60;
-    char tracer_line[] = "\ttracer_name = \"otf2\";\n";
+    char clock_frequency_line[BUFFER_SIZE] = "";
+	
+	long offset_s, offset_ns;
+	calculate_offsets(&offset_s, &offset_ns);
 
-    int clock_frequency_line_number = 70;
-    char clock_frequency_line[1000] = "";
+	char offset_s_line[BUFFER_SIZE] = "";
+	char offset_line[BUFFER_SIZE] = "";
 
     sprintf(clock_frequency_line, "\tfreq = %lu;\n", clock_frequency);
-
+	sprintf(offset_s_line, "\toffset_s = %ld;\n", offset_s);
+	sprintf(offset_line, "\toffset = %ld;\n", offset_ns);
+	
+    int count = 0;
     while ((fgets(buffer, BUFFER_SIZE, source)) != NULL)
     {
-        count++;
-
-       
-        if (count == tracer_line_number)
-            fputs(tracer_line, target);
-        if (count == clock_frequency_line_number)
-            fputs(clock_frequency_line, target);
-        if (count != tracer_line_number && count != clock_frequency_line_number)
-            fputs(buffer, target);
+		switch(count){
+			case CLOCK_FREQUENCY_LINE_NUMBER:
+				fputs(clock_frequency_line, target);
+				break;
+			case OFFSET_S_LINE_NUMBER:
+				fputs(offset_s_line, target);
+				break;
+			case OFFSET_LINE_NUMBER:
+				fputs(offset_line, target);
+				break;
+			default:
+				fputs(buffer, target);
+				break;
+		}
+		count++;
     }
 
    printf("Metadata file copied successfully.\n");
