@@ -77,7 +77,7 @@ event-record-types:
       class: structure
       members:
         - locationID: OTF2_LocationRef
-        - receiver: uint32
+        - sender: uint32
         - communicator: OTF2_CommRef
         - msgTag: uint32
         - msgLength: uint64
