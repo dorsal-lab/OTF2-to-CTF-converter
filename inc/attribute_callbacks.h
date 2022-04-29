@@ -22,7 +22,7 @@ void trace_global_def_attribute(user_data_t *userData, OTF2_Type type, OTF2_Attr
 
 void trace_attribute_list(user_data_t *userData, OTF2_AttributeList *attributeList);
 
-void trace_metrics(user_data_t *userData, uint8_t numberOfMetrics, const OTF2_Type *typeIDs, const OTF2_MetricValue *metricValues);
+void trace_metrics(user_data_t *userData, OTF2_LocationRef self, OTF2_MetricRef metric, uint8_t numberOfMetrics, const OTF2_Type *typeIDs, const OTF2_MetricValue *metricValues);
 
 void trace_program_arguments(user_data_t *userData, uint32_t numberOfArguments, const OTF2_StringRef *programArguments);
 

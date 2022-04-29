@@ -3,16 +3,25 @@ event-record-types:
     payload-field-type:
       class: structure
       members:
+        - locationID: OTF2_LocationRef
+        - metric: OTF2_MetricRef
+        - index: uint8
         - metricValue: int64
 
   MetricValue_UInt64:
     payload-field-type:
       class: structure
       members:
+        - locationID: OTF2_LocationRef
+        - metric: OTF2_MetricRef
+        - index: uint8
         - metricValue: uint64
 
   MetricValue_Double:
     payload-field-type:
       class: structure
       members:
+        - locationID: OTF2_LocationRef
+        - metric: OTF2_MetricRef
+        - index: uint8
         - metricValue: double

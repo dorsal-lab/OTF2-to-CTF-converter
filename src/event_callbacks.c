@@ -359,7 +359,7 @@ OTF2_CallbackCode Metric_callback(OTF2_LocationRef location,
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
     barectf_trace_Event_Metric(user_data->ctx, location, metric, numberOfMetrics);
-    trace_metrics(user_data, numberOfMetrics, typeIDs, metricValues);
+    trace_metrics(user_data, location, metric, numberOfMetrics, typeIDs, metricValues);
     trace_attribute_list(user_data, attributeList);
     return OTF2_CALLBACK_SUCCESS;
 }

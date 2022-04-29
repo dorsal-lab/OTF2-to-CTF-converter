@@ -182,23 +182,23 @@ void trace_attribute_list(user_data_t *userData, OTF2_AttributeList *attributeLi
     }
 }
 
-void trace_one_metric(user_data_t *userData, const OTF2_Type typeID, const OTF2_MetricValue metricValue){
+void trace_one_metric(user_data_t *userData, OTF2_LocationRef self, OTF2_MetricRef metric, uint8_t index, const OTF2_Type typeID, const OTF2_MetricValue metricValue){
     switch(typeID){
         case OTF2_TYPE_INT64:
-            barectf_trace_MetricValue_Int64(userData->ctx, metricValue.signed_int);
+            barectf_trace_MetricValue_Int64(userData->ctx, self, metric, index, metricValue.signed_int);
             break;
         case OTF2_TYPE_UINT64:
-            barectf_trace_MetricValue_UInt64(userData->ctx, metricValue.unsigned_int);
+            barectf_trace_MetricValue_UInt64(userData->ctx, self, metric, index, metricValue.unsigned_int);
             break;
         case OTF2_TYPE_DOUBLE:
-            barectf_trace_MetricValue_Double(userData->ctx, metricValue.floating_point);
+            barectf_trace_MetricValue_Double(userData->ctx, self, metric, index, metricValue.floating_point);
             break;
     }
 }
 
-void trace_metrics(user_data_t *userData, uint8_t numberOfMetrics, const OTF2_Type *typeIDs, const OTF2_MetricValue *metricValues){
+void trace_metrics(user_data_t *userData, OTF2_LocationRef self, OTF2_MetricRef metric, uint8_t numberOfMetrics, const OTF2_Type *typeIDs, const OTF2_MetricValue *metricValues){
     for(uint8_t i = 0; i < numberOfMetrics; i++){
-        trace_one_metric(userData, typeIDs[i], metricValues[i]);
+        trace_one_metric(userData, self, metric, i, typeIDs[i], metricValues[i]);
     }
 }
 
