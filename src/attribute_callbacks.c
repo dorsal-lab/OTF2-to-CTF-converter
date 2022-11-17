@@ -1,10 +1,10 @@
-/*
- *Copyright (c) 2021 Ecole Polytechnique de Montreal
+/******************************************************
+ * Copyright (c) 2021 Ecole Polytechnique de Montreal
  * All rights reserved.
  *
- *This source code is licensed under the BSD-style license found in the
- *LICENSE file in the root directory of this source tree. 
- */
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. 
+ ******************************************************/
 
 #include <stdint.h>
 #include <stdio.h>
@@ -167,6 +167,9 @@ void trace_event_attribute(user_data_t *userData, OTF2_AttributeRef attribute, O
             break;
         case OTF2_TYPE_IO_HANDLE :
             barectf_trace_EventAttribute_IoHandle(userData->ctx, attribute, value.ioHandleRef);
+            break;
+        case OTF2_TYPE_LOCATION_GROUP :
+            barectf_trace_EventAttribute_LocationGroup(userData->ctx, attribute, value.locationGroupRef);
             break;
     }
 }

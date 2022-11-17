@@ -1,10 +1,10 @@
-/*
- *Copyright (c) 2021 Ecole Polytechnique de Montreal
+/******************************************************
+ * Copyright (c) 2021 Ecole Polytechnique de Montreal
  * All rights reserved.
  *
- *This source code is licensed under the BSD-style license found in the
- *LICENSE file in the root directory of this source tree. 
- */
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. 
+ ******************************************************/
 
 #define _POSIX_C_SOURCE 199309L
 
@@ -122,14 +122,14 @@ void copy_metadata_file(char *output_directory, uint64_t clock_frequency){
     //Constructs the path of the metadata file in the converter directory
     size_t metadata_path_size = strlen(converter_directory) + strlen(metadata_name) + 1;
     char *metadata_path = (char *) malloc(metadata_path_size*sizeof(char));
-    strcpy(metadata_path, converter_directory);
-    strcat(metadata_path, metadata_name);
+    strncpy(metadata_path, converter_directory, metadata_path_size);
+    strncat(metadata_path, metadata_name, metadata_path_size);
 
     //Constructs the output path for the metadata file
     size_t output_path_size = strlen(output_directory) + strlen(metadata_name) + 1;
     char *output_path = (char *) malloc(output_path_size*sizeof(char));
-    strcpy(output_path, output_directory);
-    strcat(output_path, metadata_name);
+    strncpy(output_path, output_directory, output_path_size);
+    strncat(output_path, metadata_name, output_path_size);
 
    //Open the metadata file in reading mode
    FILE *source, *target;
@@ -392,11 +392,11 @@ void * convert_events(void *data_wrapper){
         char location_id_str[20]= "";
         sprintf(location_id_str, "/%lu", locations_ids[i]);
         stream_path_size = strlen(location_id_str) + strlen(output_directory) + 1;
-    
+
         char* stream_path = (char *) malloc(stream_path_size);
-        strcpy(stream_path, output_directory);
-        strcat(stream_path, location_id_str);       
-        
+        strncpy(stream_path, output_directory, stream_path_size);
+        strncat(stream_path, location_id_str, stream_path_size);
+
         uint64_t clock = 0;
         struct barectf_platform_linux_fs_ctx* platform_ctx = barectf_platform_linux_fs_init(4000, stream_path, 0, 0, 0, &clock);
         struct barectf_default_ctx* ctx = barectf_platform_linux_fs_get_barectf_ctx(platform_ctx);        
@@ -499,4 +499,3 @@ void convert_global_definitions(OTF2_Reader *reader, char *output_directory, clo
     free(user_data);
     free(stream_path);
 }
-

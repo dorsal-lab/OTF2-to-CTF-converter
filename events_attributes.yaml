@@ -166,3 +166,10 @@ event-record-types:
       members:
         - attribute: OTF2_AttributeRef
         - value: OTF2_IoHandleRef
+
+  EventAttribute_LocationGroup:
+    payload-field-type:
+      class: structure
+      members:
+        - attribute: OTF2_AttributeRef
+        - value: OTF2_LocationGroupRef

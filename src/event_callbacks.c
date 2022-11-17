@@ -43,8 +43,8 @@ OTF2_CallbackCode BufferFlush_callback(OTF2_LocationRef location,
                     OTF2_TimeStamp stopTime){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_BufferFlush(user_data->ctx, location, stopTime);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_BufferFlush(user_data->ctx, location, stopTime);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -57,8 +57,8 @@ OTF2_CallbackCode MeasurementOnOff_callback(OTF2_LocationRef location,
                     OTF2_MeasurementMode measurementMode){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MeasurementOnOff(user_data->ctx, location, measurementMode);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MeasurementOnOff(user_data->ctx, location, measurementMode);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -71,8 +71,8 @@ OTF2_CallbackCode Enter_callback(OTF2_LocationRef location,
                     OTF2_RegionRef region){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_Enter(user_data->ctx, location, region);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_Enter(user_data->ctx, location, region);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -85,8 +85,8 @@ OTF2_CallbackCode Leave_callback(OTF2_LocationRef location,
                     OTF2_RegionRef region){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_Leave(user_data->ctx, location, region);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_Leave(user_data->ctx, location, region);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -102,8 +102,8 @@ OTF2_CallbackCode MpiSend_callback(OTF2_LocationRef location,
                     uint64_t msgLength){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiSend(user_data->ctx, location, receiver, communicator, msgTag, msgLength);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiSend(user_data->ctx, location, receiver, communicator, msgTag, msgLength);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -120,8 +120,8 @@ OTF2_CallbackCode MpiIsend_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiIsend(user_data->ctx, location, receiver, communicator, msgTag, msgLength, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiIsend(user_data->ctx, location, receiver, communicator, msgTag, msgLength, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -134,8 +134,8 @@ OTF2_CallbackCode MpiIsendComplete_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiIsendComplete(user_data->ctx, location, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiIsendComplete(user_data->ctx, location, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -148,8 +148,8 @@ OTF2_CallbackCode MpiIrecvRequest_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiIrecvRequest(user_data->ctx, location, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiIrecvRequest(user_data->ctx, location, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -165,8 +165,8 @@ OTF2_CallbackCode MpiRecv_callback(OTF2_LocationRef location,
                     uint64_t msgLength){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiRecv(user_data->ctx, location, sender, communicator, msgTag, msgLength);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiRecv(user_data->ctx, location, sender, communicator, msgTag, msgLength);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -183,8 +183,8 @@ OTF2_CallbackCode MpiIrecv_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiIrecv(user_data->ctx, location, sender, communicator, msgTag, msgLength, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiIrecv(user_data->ctx, location, sender, communicator, msgTag, msgLength, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -197,8 +197,8 @@ OTF2_CallbackCode MpiRequestTest_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiRequestTest(user_data->ctx, location, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiRequestTest(user_data->ctx, location, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -211,8 +211,8 @@ OTF2_CallbackCode MpiRequestCancelled_callback(OTF2_LocationRef location,
                     uint64_t requestID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiRequestCancelled(user_data->ctx, location, requestID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiRequestCancelled(user_data->ctx, location, requestID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -224,8 +224,8 @@ OTF2_CallbackCode MpiCollectiveBegin_callback(OTF2_LocationRef location,
                     OTF2_AttributeList *attributeList){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiCollectiveBegin(user_data->ctx, location);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiCollectiveBegin(user_data->ctx, location);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -242,8 +242,8 @@ OTF2_CallbackCode MpiCollectiveEnd_callback(OTF2_LocationRef location,
                     uint64_t sizeReceived){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_MpiCollectiveEnd(user_data->ctx, location, collectiveOp, communicator, root, sizeSent, sizeReceived);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_MpiCollectiveEnd(user_data->ctx, location, collectiveOp, communicator, root, sizeSent, sizeReceived);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -256,8 +256,8 @@ OTF2_CallbackCode OmpFork_callback(OTF2_LocationRef location,
                     uint32_t numberOfRequestedThreads){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpFork(user_data->ctx, location, numberOfRequestedThreads);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpFork(user_data->ctx, location, numberOfRequestedThreads);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -269,8 +269,8 @@ OTF2_CallbackCode OmpJoin_callback(OTF2_LocationRef location,
                     OTF2_AttributeList *attributeList){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpJoin(user_data->ctx, location);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpJoin(user_data->ctx, location);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -284,8 +284,8 @@ OTF2_CallbackCode OmpAcquireLock_callback(OTF2_LocationRef location,
                     uint32_t acquisitionOrder){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpAcquireLock(user_data->ctx, location, lockID, acquisitionOrder);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpAcquireLock(user_data->ctx, location, lockID, acquisitionOrder);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -299,8 +299,8 @@ OTF2_CallbackCode OmpReleaseLock_callback(OTF2_LocationRef location,
                     uint32_t acquisitionOrder){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpReleaseLock(user_data->ctx, location, lockID, acquisitionOrder);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpReleaseLock(user_data->ctx, location, lockID, acquisitionOrder);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -313,8 +313,8 @@ OTF2_CallbackCode OmpTaskCreate_callback(OTF2_LocationRef location,
                     uint64_t taskID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpTaskCreate(user_data->ctx, location, taskID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpTaskCreate(user_data->ctx, location, taskID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -327,8 +327,8 @@ OTF2_CallbackCode OmpTaskSwitch_callback(OTF2_LocationRef location,
                     uint64_t taskID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpTaskSwitch(user_data->ctx, location, taskID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpTaskSwitch(user_data->ctx, location, taskID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -341,8 +341,8 @@ OTF2_CallbackCode OmpTaskComplete_callback(OTF2_LocationRef location,
                     uint64_t taskID){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_OmpTaskComplete(user_data->ctx, location, taskID);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_OmpTaskComplete(user_data->ctx, location, taskID);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -359,8 +359,8 @@ OTF2_CallbackCode Metric_callback(OTF2_LocationRef location,
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
     barectf_trace_Event_Metric(user_data->ctx, location, metric, numberOfMetrics);
-    trace_metrics(user_data, location, metric, numberOfMetrics, typeIDs, metricValues);
     trace_attribute_list(user_data, attributeList);
+    trace_metrics(user_data, location, metric, numberOfMetrics, typeIDs, metricValues);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -374,8 +374,8 @@ OTF2_CallbackCode ParameterString_callback(OTF2_LocationRef location,
                     OTF2_StringRef string){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ParameterString(user_data->ctx, location, parameter, string);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ParameterString(user_data->ctx, location, parameter, string);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -389,8 +389,8 @@ OTF2_CallbackCode ParameterInt_callback(OTF2_LocationRef location,
                     int64_t value){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ParameterInt(user_data->ctx, location, parameter, value);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ParameterInt(user_data->ctx, location, parameter, value);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -404,8 +404,8 @@ OTF2_CallbackCode ParameterUnsignedInt_callback(OTF2_LocationRef location,
                     uint64_t value){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ParameterUnsignedInt(user_data->ctx, location, parameter, value);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ParameterUnsignedInt(user_data->ctx, location, parameter, value);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -418,8 +418,8 @@ OTF2_CallbackCode RmaWinCreate_callback(OTF2_LocationRef location,
                     OTF2_RmaWinRef win){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaWinCreate(user_data->ctx, location, win);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaWinCreate(user_data->ctx, location, win);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -432,8 +432,8 @@ OTF2_CallbackCode RmaWinDestroy_callback(OTF2_LocationRef location,
                     OTF2_RmaWinRef win){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaWinDestroy(user_data->ctx, location, win);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaWinDestroy(user_data->ctx, location, win);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -445,8 +445,8 @@ OTF2_CallbackCode RmaCollectiveBegin_callback(OTF2_LocationRef location,
                     OTF2_AttributeList *attributeList){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaCollectiveBegin(user_data->ctx, location);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaCollectiveBegin(user_data->ctx, location);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -464,8 +464,8 @@ OTF2_CallbackCode RmaCollectiveEnd_callback(OTF2_LocationRef location,
                     uint64_t bytesReceived){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaCollectiveEnd(user_data->ctx, location, collectiveOp, syncLevel, win, root, bytesSent, bytesReceived);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaCollectiveEnd(user_data->ctx, location, collectiveOp, syncLevel, win, root, bytesSent, bytesReceived);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -480,8 +480,8 @@ OTF2_CallbackCode RmaGroupSync_callback(OTF2_LocationRef location,
                     OTF2_GroupRef group){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaGroupSync(user_data->ctx, location, syncLevel, win, group);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaGroupSync(user_data->ctx, location, syncLevel, win, group);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -497,8 +497,8 @@ OTF2_CallbackCode RmaRequestLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaRequestLock(user_data->ctx, location, win, remote, lockId, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaRequestLock(user_data->ctx, location, win, remote, lockId, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -514,8 +514,8 @@ OTF2_CallbackCode RmaAcquireLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaAcquireLock(user_data->ctx, location, win, remote, lockId, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaAcquireLock(user_data->ctx, location, win, remote, lockId, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -531,8 +531,8 @@ OTF2_CallbackCode RmaTryLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaTryLock(user_data->ctx, location, win, remote, lockId, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaTryLock(user_data->ctx, location, win, remote, lockId, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -547,8 +547,8 @@ OTF2_CallbackCode RmaReleaseLock_callback(OTF2_LocationRef location,
                     uint64_t lockId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaReleaseLock(user_data->ctx, location, win, remote, lockId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaReleaseLock(user_data->ctx, location, win, remote, lockId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -563,8 +563,8 @@ OTF2_CallbackCode RmaSync_callback(OTF2_LocationRef location,
                     OTF2_RmaSyncType syncType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaSync(user_data->ctx, location, win, remote, syncType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaSync(user_data->ctx, location, win, remote, syncType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -577,8 +577,8 @@ OTF2_CallbackCode RmaWaitChange_callback(OTF2_LocationRef location,
                     OTF2_RmaWinRef win){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaWaitChange(user_data->ctx, location, win);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaWaitChange(user_data->ctx, location, win);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -594,8 +594,8 @@ OTF2_CallbackCode RmaPut_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaPut(user_data->ctx, location, win, remote, bytes, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaPut(user_data->ctx, location, win, remote, bytes, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -611,8 +611,8 @@ OTF2_CallbackCode RmaGet_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaGet(user_data->ctx, location, win, remote, bytes, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaGet(user_data->ctx, location, win, remote, bytes, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -630,8 +630,8 @@ OTF2_CallbackCode RmaAtomic_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaAtomic(user_data->ctx, location, win, remote, type, bytesSent, bytesReceived, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaAtomic(user_data->ctx, location, win, remote, type, bytesSent, bytesReceived, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -645,8 +645,8 @@ OTF2_CallbackCode RmaOpCompleteBlocking_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaOpCompleteBlocking(user_data->ctx, location, win, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaOpCompleteBlocking(user_data->ctx, location, win, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -660,8 +660,8 @@ OTF2_CallbackCode RmaOpCompleteNonBlocking_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaOpCompleteNonBlocking(user_data->ctx, location, win, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaOpCompleteNonBlocking(user_data->ctx, location, win, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -675,8 +675,8 @@ OTF2_CallbackCode RmaOpTest_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaOpTest(user_data->ctx, location, win, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaOpTest(user_data->ctx, location, win, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -690,8 +690,8 @@ OTF2_CallbackCode RmaOpCompleteRemote_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_RmaOpCompleteRemote(user_data->ctx, location, win, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_RmaOpCompleteRemote(user_data->ctx, location, win, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -705,8 +705,8 @@ OTF2_CallbackCode ThreadFork_callback(OTF2_LocationRef location,
                     uint32_t numberOfRequestedThreads){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadFork(user_data->ctx, location, model, numberOfRequestedThreads);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadFork(user_data->ctx, location, model, numberOfRequestedThreads);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -719,8 +719,8 @@ OTF2_CallbackCode ThreadJoin_callback(OTF2_LocationRef location,
                     OTF2_Paradigm model){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadJoin(user_data->ctx, location, model);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadJoin(user_data->ctx, location, model);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -733,8 +733,8 @@ OTF2_CallbackCode ThreadTeamBegin_callback(OTF2_LocationRef location,
                     OTF2_CommRef threadTeam){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadTeamBegin(user_data->ctx, location, threadTeam);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadTeamBegin(user_data->ctx, location, threadTeam);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -747,8 +747,8 @@ OTF2_CallbackCode ThreadTeamEnd_callback(OTF2_LocationRef location,
                     OTF2_CommRef threadTeam){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadTeamEnd(user_data->ctx, location, threadTeam);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadTeamEnd(user_data->ctx, location, threadTeam);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -763,8 +763,8 @@ OTF2_CallbackCode ThreadAcquireLock_callback(OTF2_LocationRef location,
                     uint32_t acquisitionOrder){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadAcquireLock(user_data->ctx, location, model, lockID, acquisitionOrder);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadAcquireLock(user_data->ctx, location, model, lockID, acquisitionOrder);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -779,8 +779,8 @@ OTF2_CallbackCode ThreadReleaseLock_callback(OTF2_LocationRef location,
                     uint32_t acquisitionOrder){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadAcquireLock(user_data->ctx, location, model, lockID, acquisitionOrder);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadAcquireLock(user_data->ctx, location, model, lockID, acquisitionOrder);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -795,8 +795,8 @@ OTF2_CallbackCode ThreadTaskCreate_callback(OTF2_LocationRef location,
                     uint32_t generationNumber){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadTaskCreate(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadTaskCreate(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -811,8 +811,8 @@ OTF2_CallbackCode ThreadTaskSwitch_callback(OTF2_LocationRef location,
                     uint32_t generationNumber){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadTaskSwitch(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadTaskSwitch(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -827,8 +827,8 @@ OTF2_CallbackCode ThreadTaskComplete_callback(OTF2_LocationRef location,
                     uint32_t generationNumber){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadTaskComplete(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadTaskComplete(user_data->ctx, location, threadTeam, creatingThread, generationNumber);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -842,8 +842,8 @@ OTF2_CallbackCode ThreadCreate_callback(OTF2_LocationRef location,
                     uint64_t sequenceCount){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadCreate(user_data->ctx, location, threadContingent, sequenceCount);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadCreate(user_data->ctx, location, threadContingent, sequenceCount);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -857,8 +857,8 @@ OTF2_CallbackCode ThreadBegin_callback(OTF2_LocationRef location,
                     uint64_t sequenceCount){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadBegin(user_data->ctx, location, threadContingent, sequenceCount);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadBegin(user_data->ctx, location, threadContingent, sequenceCount);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -872,8 +872,8 @@ OTF2_CallbackCode ThreadWait_callback(OTF2_LocationRef location,
                     uint64_t sequenceCount){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadWait(user_data->ctx, location, threadContingent, sequenceCount);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadWait(user_data->ctx, location, threadContingent, sequenceCount);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -887,8 +887,8 @@ OTF2_CallbackCode ThreadEnd_callback(OTF2_LocationRef location,
                     uint64_t sequenceCount){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ThreadEnd(user_data->ctx, location, threadContingent, sequenceCount);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ThreadEnd(user_data->ctx, location, threadContingent, sequenceCount);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -902,8 +902,8 @@ OTF2_CallbackCode CallingContextEnter_callback(OTF2_LocationRef location,
                     uint32_t unwindDistance){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_CallingContextEnter(user_data->ctx, location, callingContext, unwindDistance);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_CallingContextEnter(user_data->ctx, location, callingContext, unwindDistance);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -916,8 +916,8 @@ OTF2_CallbackCode CallingContextLeave_callback(OTF2_LocationRef location,
                     OTF2_CallingContextRef callingContext){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_CallingContextLeave(user_data->ctx, location, callingContext);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_CallingContextLeave(user_data->ctx, location, callingContext);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -932,8 +932,8 @@ OTF2_CallbackCode CallingContextSample_callback(OTF2_LocationRef location,
                     OTF2_InterruptGeneratorRef interruptGenerator){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_CallingContextSample(user_data->ctx, location, callingContext, unwindDistance, interruptGenerator);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_CallingContextSample(user_data->ctx, location, callingContext, unwindDistance, interruptGenerator);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -949,8 +949,8 @@ OTF2_CallbackCode IoCreateHandle_callback(OTF2_LocationRef location,
                     OTF2_IoStatusFlag statusFlags){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoCreateHandle(user_data->ctx, location, handle, mode, creationFlags, statusFlags);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoCreateHandle(user_data->ctx, location, handle, mode, creationFlags, statusFlags);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -963,8 +963,8 @@ OTF2_CallbackCode IoDestroyHandle_callback(OTF2_LocationRef location,
                     OTF2_IoHandleRef handle){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoDestroyHandle(user_data->ctx, location, handle);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoDestroyHandle(user_data->ctx, location, handle);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -979,8 +979,8 @@ OTF2_CallbackCode IoDuplicateHandle_callback(OTF2_LocationRef location,
                     OTF2_IoStatusFlag statusFlags){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoDuplicateHandle(user_data->ctx, location, oldHandle, newHandle, statusFlags);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoDuplicateHandle(user_data->ctx, location, oldHandle, newHandle, statusFlags);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -996,8 +996,8 @@ OTF2_CallbackCode IoSeek_callback(OTF2_LocationRef location,
                     uint64_t offsetResult){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoSeek(user_data->ctx, location, handle, offsetRequest, whence, offsetResult);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoSeek(user_data->ctx, location, handle, offsetRequest, whence, offsetResult);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1011,8 +1011,8 @@ OTF2_CallbackCode IoChangeStatusFlags_callback(OTF2_LocationRef location,
                     OTF2_IoStatusFlag statusFlags){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoChangeStatusFlags(user_data->ctx, location, handle, statusFlags);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoChangeStatusFlags(user_data->ctx, location, handle, statusFlags);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1026,8 +1026,8 @@ OTF2_CallbackCode IoDeleteFile_callback(OTF2_LocationRef location,
                     OTF2_IoFileRef file){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoDeleteFile(user_data->ctx, location, ioParadigm, file);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoDeleteFile(user_data->ctx, location, ioParadigm, file);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1044,8 +1044,8 @@ OTF2_CallbackCode IoOperationBegin_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoOperationBegin(user_data->ctx, location, handle, mode, operationFlags, bytesRequest, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoOperationBegin(user_data->ctx, location, handle, mode, operationFlags, bytesRequest, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1059,8 +1059,8 @@ OTF2_CallbackCode IoOperationTest_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoOperationTest(user_data->ctx, location, handle, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoOperationTest(user_data->ctx, location, handle, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1074,8 +1074,8 @@ OTF2_CallbackCode IoOperationIssued_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoOperationIssued(user_data->ctx, location, handle, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoOperationIssued(user_data->ctx, location, handle, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1090,8 +1090,8 @@ OTF2_CallbackCode IoOperationComplete_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoOperationComplete(user_data->ctx, location, handle, bytesResult, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoOperationComplete(user_data->ctx, location, handle, bytesResult, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1105,8 +1105,8 @@ OTF2_CallbackCode IoOperationCancelled_callback(OTF2_LocationRef location,
                     uint64_t matchingId){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoOperationCancelled(user_data->ctx, location, handle, matchingId);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoOperationCancelled(user_data->ctx, location, handle, matchingId);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1120,8 +1120,8 @@ OTF2_CallbackCode IoAcquireLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoAcquireLock(user_data->ctx, location, handle, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoAcquireLock(user_data->ctx, location, handle, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1135,8 +1135,8 @@ OTF2_CallbackCode IoReleaseLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoReleaseLock(user_data->ctx, location, handle, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoReleaseLock(user_data->ctx, location, handle, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1150,8 +1150,8 @@ OTF2_CallbackCode IoTryLock_callback(OTF2_LocationRef location,
                     OTF2_LockType lockType){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_IoTryLock(user_data->ctx, location, handle, lockType);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_IoTryLock(user_data->ctx, location, handle, lockType);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1166,9 +1166,9 @@ OTF2_CallbackCode ProgramBegin_callback(OTF2_LocationRef location,
                     const OTF2_StringRef *programArguments){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ProgramBegin(user_data->ctx, location, programName);
-    trace_program_arguments(user_data, numberOfArguments, programArguments);
     trace_attribute_list(user_data, attributeList);
+    trace_program_arguments(user_data, numberOfArguments, programArguments);
+    barectf_trace_Event_ProgramBegin(user_data->ctx, location, programName);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -1181,8 +1181,8 @@ OTF2_CallbackCode ProgramEnd_callback(OTF2_LocationRef location,
                     int64_t exitStatus){
     user_data_t *user_data = (user_data_t*)userData;
     *(user_data->clock_address) = time;
-    barectf_trace_Event_ProgramEnd(user_data->ctx, location, exitStatus);
     trace_attribute_list(user_data, attributeList);
+    barectf_trace_Event_ProgramEnd(user_data->ctx, location, exitStatus);
     return OTF2_CALLBACK_SUCCESS;
 }
 

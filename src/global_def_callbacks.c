@@ -1,10 +1,10 @@
-/*
- *Copyright (c) 2021 Ecole Polytechnique de Montreal
+/******************************************************
+ * Copyright (c) 2021 Ecole Polytechnique de Montreal
  * All rights reserved.
  *
- *This source code is licensed under the BSD-style license found in the
- *LICENSE file in the root directory of this source tree. 
- */
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. 
+ ******************************************************/
 
 #include <stdint.h>
 #include <stdio.h>
@@ -45,8 +45,8 @@ OTF2_CallbackCode GlobalDef_ParadigmProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_ParadigmProperty(user_data->ctx, paradigm, property);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_ParadigmProperty(user_data->ctx, paradigm, property);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -64,8 +64,8 @@ OTF2_CallbackCode GlobalDef_IoParadigm_callback(void *userData,
     user_data_t *user_data = (user_data_t*)userData;
     barectf_trace_GlobalDef_IoParadigm(user_data->ctx, self, identification, name, ioParadigmClass, ioParadigmFlags, numberOfProperties);
     for(int i = 0; i++; i < numberOfProperties){
-        barectf_trace_GlobalDef_IoParadigmProperty(user_data->ctx, self, properties[i]);
         trace_global_def_attribute(user_data, types[i], values[i]);
+        barectf_trace_GlobalDef_IoParadigmProperty(user_data->ctx, self, properties[i]);
     }
     return OTF2_CALLBACK_SUCCESS;
 }
@@ -270,8 +270,8 @@ OTF2_CallbackCode GlobalDef_SystemTreeNodeProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_SystemTreeNodeProperty(user_data->ctx, systemTreeNode, name);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_SystemTreeNodeProperty(user_data->ctx, systemTreeNode, name);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -291,8 +291,8 @@ OTF2_CallbackCode GlobalDef_LocationGroupProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_LocationGroupProperty(user_data->ctx, locationGroup, name);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_LocationGroupProperty(user_data->ctx, locationGroup, name);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -303,8 +303,8 @@ OTF2_CallbackCode GlobalDef_LocationProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_LocationProperty(user_data->ctx, location, name);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_LocationProperty(user_data->ctx, location, name);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -374,8 +374,8 @@ OTF2_CallbackCode GlobalDef_CallingContextProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_CallingContextProperty(user_data->ctx, callingContext, name);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_CallingContextProperty(user_data->ctx, callingContext, name);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -399,8 +399,8 @@ OTF2_CallbackCode GlobalDef_IoFileProperty_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_IoFileProperty(user_data->ctx, ioFile, name);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_IoFileProperty(user_data->ctx, ioFile, name);
     return OTF2_CALLBACK_SUCCESS;
 }
 
@@ -455,8 +455,8 @@ OTF2_CallbackCode GlobalDef_CallpathParameter_callback(void *userData,
                     OTF2_Type type,
                     OTF2_AttributeValue value){
     user_data_t *user_data = (user_data_t*)userData;
-    barectf_trace_GlobalDef_CallpathParameter(user_data->ctx, callpath, parameter);
     trace_global_def_attribute(user_data, type, value);
+    barectf_trace_GlobalDef_CallpathParameter(user_data->ctx, callpath, parameter);
     return OTF2_CALLBACK_SUCCESS;
 }
 
